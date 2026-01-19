@@ -229,13 +229,55 @@ footer{border-top:1px solid #222;padding:40px;color:#777}
 </div>
 
 <!-- ORDER -->
-<div class="modal" id="order">
-  <div class="box">
-    <input id="link" placeholder="Paste your link">
-    <button class="primary" onclick="placeOrder()">Watch Ad & Proceed</button>
-    <button onclick="closeOrder()">Cancel</button>
-  </div>
-</div>
+async function placeOrder() {
+  if (!link.value) {
+    alert("Please paste a link first");
+    return;
+  }
+
+  // FORCE POPADS POP (required for PopAds)
+  window.open("about:blank", "_blank");
+
+  // Simulate ad watch (PopAds has no callback)
+  let seconds = 10;
+  const btn = event.target;
+  btn.disabled = true;
+  btn.innerText = "Watching ad...";
+
+  const timer = setInterval(() => {
+    btn.innerText = `Watching ad... ${seconds}s`;
+    seconds--;
+
+    if (seconds < 0) {
+      clearInterval(timer);
+      btn.innerText = "Processing...";
+      sendOrder();
+    }
+  }, 1000);
+}
+      
+async function sendOrder() {
+  const res = await fetch("/api/order", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      platform,
+      link: link.value,
+      token: localStorage.token || null
+    })
+  });
+
+  const data = await res.json();
+
+  if (data.error) {
+    alert(data.error);
+  } else {
+    alert("Order placed successfully!");
+  }
+
+  closeOrder();
+}
+
 
 <script>
 /* TYPING */
@@ -299,3 +341,4 @@ if(window.matchMedia("(pointer:fine)").matches){
 
 </body>
 </html>
+
