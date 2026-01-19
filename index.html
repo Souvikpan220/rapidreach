@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RapidReach</title>
+
+<!-- PopAds -->
+<script>
+  var popads = popads || {};
+  popads.siteId = YOUR_POPADS_SITE_ID;
+</script>
+<script src="//c1.popads.net/pop.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:system-ui;
+  background:#0a0a0a;
+  color:#fff;
+  overflow-x:hidden;
+}
+a{text-decoration:none;color:inherit}
+
+/* GOLDEN GLOW */
+.glow{
+  position:fixed;
+  top:0;
+  width:500px;
+  height:100%;
+  background:radial-gradient(circle,rgba(245,199,122,.65),transparent 70%);
+  filter:blur(140px);
+  z-index:-1;
+}
+.glow.left{left:-240px}
+.glow.right{right:-240px}
+
+/* HEADER */
+header{
+  position:fixed;
+  width:100%;
+  top:0;
+  display:flex;
+  justify-content:space-between;
+  padding:20px 40px;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(8px);
+  z-index:10;
+}
+nav a{margin-left:22px;cursor:pointer;color:#ddd}
+
+/* SECTIONS */
+section{
+  max-width:1100px;
+  margin:auto;
+  padding:120px 20px;
+  text-align:center;
+}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+h1{font-size:3.4rem}
+h2{font-size:2.4rem;margin-bottom:12px}
+p{color:#aaa;max-width:760px;margin:auto}
+
+/* TYPING */
+.subtitle{font-size:1.7rem;color:#ccc;min-height:2.2rem}
+
+/* BUTTONS */
+.buttons{display:flex;gap:24px;justify-content:center;margin-top:40px}
+.btn{
+  padding:18px 34px;
+  border-radius:18px;
+  background:#111;
+  border:1px solid #333;
+  cursor:pointer;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  transition:.3s;
+}
+.btn:hover{box-shadow:0 0 35px rgba(245,199,122,.55);transform:translateY(-2px)}
+.icon{width:22px;height:22px}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:32px;margin-top:40px}
+.card{background:#111;border:1px solid #333;padding:32px;border-radius:18px}
+
+/* FAQ */
+.faq{max-width:800px;margin:auto;text-align:left}
+.faq-item{border-bottom:1px solid #333;padding:18px 0;cursor:pointer}
+.faq-a{max-height:0;overflow:hidden;transition:.3s;color:#aaa}
+
+/* MODALS */
+.modal{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  backdrop-filter:blur(10px);
+}
+.modal.active{display:flex}
+.box{
+  background:#111;
+  border:1px solid #333;
+  border-radius:22px;
+  padding:32px;
+  width:360px;
+}
+input,button{
+  width:100%;
+  padding:14px;
+  margin-top:14px;
+  background:#0d0d0d;
+  color:#fff;
+  border:1px solid #333;
+  border-radius:14px;
+}
+.primary{background:#f5c77a;color:#000;font-weight:700}
+
+/* WATER CURSOR */
+.ripple{
+  position:fixed;
+  border:1px solid rgba(245,199,122,.4);
+  border-radius:50%;
+  width:20px;height:20px;
+  pointer-events:none;
+  animation:ripple .8s linear;
+}
+@keyframes ripple{to{transform:scale(6);opacity:0}}
+
+footer{border-top:1px solid #222;padding:40px;color:#777}
+</style>
+</head>
+
+<body>
+
+<div class="glow left"></div>
+<div class="glow right"></div>
+
+<header>
+  <strong>RapidReach</strong>
+  <nav>
+    <a onclick="scrollTo('how')">How It Works</a>
+    <a onclick="scrollTo('faq')">FAQ</a>
+    <a href="https://discord.gg/eG3KwUXcmB" target="_blank">Discord</a>
+    <a onclick="openAuth()">Login</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <h1 id="type"></h1>
+  <p id="sub" class="subtitle"></p>
+
+  <div class="buttons">
+    <div class="btn" onclick="openOrder('tiktok')">
+      <svg class="icon" viewBox="0 0 24 24" fill="white">
+        <path d="M12 2h3a5 5 0 0 0 5 5v3a8 8 0 0 1-5-1.7V16a6 6 0 1 1-6-6v3a3 3 0 1 0 3 3z"/>
+      </svg>TikTok
+    </div>
+    <div class="btn" onclick="openOrder('instagram')">
+      <svg class="icon" viewBox="0 0 24 24" fill="white">
+        <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z"/>
+      </svg>Instagram
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Why Choose Us</h2>
+  <div class="grid">
+    <div class="card">⚡ Fast Delivery</div>
+    <div class="card">🔒 100% Safe</div>
+    <div class="card">🎁 Completely Free</div>
+  </div>
+</section>
+
+<section>
+  <h2>Our Services</h2>
+  <div class="grid">
+    <div class="card">TikTok Views</div>
+    <div class="card">Instagram Reel Views</div>
+  </div>
+</section>
+
+<section id="how">
+  <h2>How It Works</h2>
+  <div class="grid">
+    <div class="card">Choose Service</div>
+    <div class="card">Paste Link</div>
+    <div class="card">Get Views</div>
+  </div>
+</section>
+
+<section id="faq">
+  <h2>FAQ</h2>
+  <div class="faq">
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div>Is it free?</div>
+      <div class="faq-a">Yes, free users just watch one ad.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div>Is login required?</div>
+      <div class="faq-a">Only for premium users.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div>How many views?</div>
+      <div class="faq-a">Exactly 100 views per order.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 RapidReach • All Rights Reserved
+</footer>
+
+<!-- LOGIN + PREMIUM -->
+<div class="modal" id="auth">
+  <div class="box">
+    <h3>Premium Plan</h3>
+    <p>✔ No Ads<br>✔ Faster Orders<br>✔ Priority Support</p>
+    <h2>$4.99</h2>
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+    <button class="primary" onclick="signup()">Signup & Buy</button>
+    <button onclick="login()">Login</button>
+    <button onclick="closeAuth()">Close</button>
+  </div>
+</div>
+
+<!-- ORDER -->
+<div class="modal" id="order">
+  <div class="box">
+    <input id="link" placeholder="Paste your link">
+    <button class="primary" onclick="placeOrder()">Watch Ad & Proceed</button>
+    <button onclick="closeOrder()">Cancel</button>
+  </div>
+</div>
+
+<script>
+/* TYPING */
+const main="Luxury Social Media Growth";
+let i=0;const type=document.getElementById("type");
+(function t(){if(i<main.length){type.innerHTML+=main[i++];setTimeout(t,80)}})();
+const sub="Luxury social media growth for TikTok & Instagram.";
+let j=0;const s=document.getElementById("sub");
+(function st(){if(j<sub.length){s.innerHTML+=sub[j++];setTimeout(st,45)}})();
+
+/* MODALS */
+let platform="";
+function openAuth(){auth.classList.add("active")}
+function closeAuth(){auth.classList.remove("active")}
+function openOrder(p){platform=p;order.classList.add("active")}
+function closeOrder(){order.classList.remove("active")}
+
+/* AUTH */
+async function signup(){
+  await fetch("/api/signup",{method:"POST",headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({email:email.value,password:password.value})});
+  alert("Account created");
+}
+async function login(){
+  const r=await fetch("/api/login",{method:"POST",headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({email:email.value,password:password.value})});
+  const d=await r.json();
+  if(d.token){localStorage.token=d.token;closeAuth()}
+}
+
+/* ORDER */
+async function placeOrder(){
+  if(!localStorage.token){await new Promise(r=>setTimeout(r,10000))}
+  const r=await fetch("/api/order",{method:"POST",headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({platform,link:link.value,token:localStorage.token})});
+  alert(JSON.stringify(await r.json()));
+  closeOrder();
+}
+
+/* FAQ */
+function toggleFaq(el){
+  const a=el.querySelector(".faq-a");
+  a.style.maxHeight=a.style.maxHeight?"":a.scrollHeight+"px";
+}
+
+/* SCROLL */
+function scrollTo(id){document.getElementById(id).scrollIntoView({behavior:"smooth"})}
+
+/* WATER CURSOR */
+if(window.matchMedia("(pointer:fine)").matches){
+  document.addEventListener("mousemove",e=>{
+    const r=document.createElement("div");
+    r.className="ripple";
+    r.style.left=e.clientX+"px";
+    r.style.top=e.clientY+"px";
+    document.body.appendChild(r);
+    setTimeout(()=>r.remove(),800);
+  });
+}
+</script>
+
+</body>
+</html>
