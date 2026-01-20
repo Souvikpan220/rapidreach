@@ -63,11 +63,21 @@ input{
 </div>
 
 <div id="dashboard" style="display:none">
+
   <div class="grid">
     <div class="card">👤 Users: <span id="users">0</span></div>
     <div class="card">📦 Orders: <span id="orders">0</span></div>
     <div class="card">🎵 TikTok Orders: <span id="tt">0</span></div>
     <div class="card">📸 Instagram Orders: <span id="ig">0</span></div>
+  </div>
+
+  <div class="grid">
+    <div class="card">👀 Total Visits: <span id="totalVisits">0</span></div>
+    <div class="card">⏱️ Last 24h Visits: <span id="last24h">0</span></div>
+    <div class="card">🌍 Recent IPs:
+      <div id="ipList" style="font-size:13px;opacity:.8"></div>
+    </div>
+    <div class="card">🕒 Time on Dashboard: <span id="timeSpent">0</span>s</div>
   </div>
 
   <h2 style="margin-top:40px">Recent Orders</h2>
@@ -85,6 +95,8 @@ input{
 </div>
 
 <script>
+let dashboardStart = null;
+
 async function login(){
   const r = await fetch("/api/admin-login",{
     method:"POST",
@@ -95,11 +107,20 @@ async function login(){
   if(d.ok){
     localStorage.adminToken=d.token;
     loadData();
+    startTimer();
     loginBox.style.display="none";
     dashboard.style.display="block";
   }else{
     alert("Invalid admin key");
   }
+}
+
+function startTimer(){
+  dashboardStart = Date.now();
+  setInterval(()=>{
+    timeSpent.innerText =
+      Math.floor((Date.now()-dashboardStart)/1000);
+  },1000);
 }
 
 async function loadData(){
@@ -112,6 +133,14 @@ async function loadData(){
   orders.innerText=d.orders;
   tt.innerText=d.tiktok;
   ig.innerText=d.instagram;
+
+  totalVisits.innerText=d.totalVisits;
+  last24h.innerText=d.last24hVisits;
+
+  ipList.innerHTML="";
+  d.recentIPs.forEach(ip=>{
+    ipList.innerHTML+=`<div>${ip}</div>`;
+  });
 
   orderTable.innerHTML="";
   d.recent.forEach(o=>{
