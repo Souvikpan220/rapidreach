@@ -162,6 +162,7 @@ footer{border-top:1px solid #222;padding:40px;color:#777}
     <h3 id="linkTitle"></h3>
     <input id="serviceLink" placeholder="Paste link">
     <button class="primary" onclick="submitOrder()">Submit</button>
+    <p id="cooldownText" style="margin-top:12px;color:#f5c77a;font-weight:600"></p>
     <button onclick="closeLink()">Cancel</button>
   </div>
 </div>
@@ -179,51 +180,60 @@ const cooldowns=JSON.parse(localStorage.getItem("cooldowns")||"{}");
 
 function openService(p){
   platform=p;
-  document.getElementById("serviceTitle").innerText=
-    p==="tiktok"?"TikTok Services":"Instagram Services";
-  document.getElementById("serviceModal").classList.add("active");
+  serviceTitle.innerText=p==="tiktok"?"TikTok Services":"Instagram Services";
+  serviceModal.classList.add("active");
 }
 function closeService(){serviceModal.classList.remove("active")}
 function openLink(){
   closeService();
-  document.getElementById("linkTitle").innerText=
-    platform==="tiktok"?"Submit TikTok Link":"Submit Instagram Link";
+  linkTitle.innerText=platform==="tiktok"?"Submit TikTok Link":"Submit Instagram Link";
   linkModal.classList.add("active");
 }
 function closeLink(){linkModal.classList.remove("active")}
 
 async function submitOrder(){
   const link=serviceLink.value.trim();
-  if(!link)return alert("Paste a valid link");
+  const cdText=document.getElementById("cooldownText");
+  if(!link){cdText.innerText="❌ Paste a valid link";return;}
 
   const now=Date.now();
-  if(cooldowns[platform] && now-cooldowns[platform]<15*60*1000)
-    return alert("Please wait 15 minutes");
+  const limit=15*60*1000;
 
-  cooldowns[platform]=now;
-  localStorage.setItem("cooldowns",JSON.stringify(cooldowns));
+  if(cooldowns[platform] && now-cooldowns[platform]<limit){
+    startCooldownTimer();
+    return;
+  }
 
-  const serviceId=platform==="tiktok"?2409:2506;
+  cdText.innerText="⏳ Processing your order...";
 
-const r = await fetch("/api/order", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    platform: platform,   // "tiktok" or "instagram"
-    link: link
-  })
-});
+  const r=await fetch("/api/order",{
+    method:"POST",
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({platform,link})
+  });
+  const d=await r.json();
 
-const d = await r.json();
-
-if (d.success) {
-  alert("✅ Success! Views will be delivered shortly.");
-  closeLink();
-} else {
-  alert("❌ Error: " + d.error);
+  if(d.success){
+    cooldowns[platform]=Date.now();
+    localStorage.setItem("cooldowns",JSON.stringify(cooldowns));
+    cdText.innerText="✅ Success! Views will be delivered shortly.";
+    startCooldownTimer();
+  }else{
+    cdText.innerText="❌ Error: "+d.error;
+  }
 }
 
-  
+function startCooldownTimer(){
+  const cdText=document.getElementById("cooldownText");
+  const limit=15*60*1000;
+  const t=setInterval(()=>{
+    const r=limit-(Date.now()-cooldowns[platform]);
+    if(r<=0){
+      cdText.innerText="✅ You can place a new order now.";
+      clearInterval(t);return;
+    }
+    cdText.innerText=`⏳ Cooldown remaining: ${Math.floor(r/60000)}m ${Math.floor((r%60000)/1000)}s`;
+  },1000);
 }
 
 /* FAQ */
@@ -252,4 +262,3 @@ if(window.matchMedia("(pointer:fine)").matches){
 
 </body>
 </html>
-
