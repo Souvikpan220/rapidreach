@@ -180,6 +180,29 @@ color:#fff;border:1px solid #333;border-radius:14px}
 .primary{background:#f5c77a;color:#000;font-weight:700}
 .disabled{opacity:.5;cursor:not-allowed}
 
+<!-- PREMIUM MODAL (ADDED) -->
+<div class="modal" id="premiumModal">
+  <div class="box">
+    <h3>💎 Premium Plan</h3>
+    <p style="margin-top:8px;color:#aaa">$4.99 / Lifetime</p>
+
+    <ul style="text-align:left;margin:20px 0;color:#ccc;line-height:1.7">
+      <li>⚡ Faster delivery</li>
+      <li>🔓 Higher limits</li>
+      <li>🛡️ Priority processing</li>
+      <li>🎯 Exclusive features</li>
+    </ul>
+
+    <p style="color:#f5c77a;font-weight:700">Payment Methods</p>
+    <p style="color:#aaa">Bitcoin • Litecoin</p>
+
+    <button class="primary" onclick="buyPremium()">Buy Premium</button>
+    <button onclick="closePremium()">Cancel</button>
+  </div>
+</div>
+
+  
+
 /* WATER CURSOR */
 .ripple{position:fixed;border:1px solid rgba(245,199,122,.4);
 border-radius:50%;width:20px;height:20px;pointer-events:none;
@@ -227,6 +250,15 @@ footer{border-top:1px solid #222;padding:40px;color:#777}
         <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z"/>
       </svg>Instagram
     </div>
+
+<!-- PREMIUM BUTTON (ADDED) -->
+<div class="btn" onclick="openPremium()">
+  <svg class="icon" viewBox="0 0 24 24" fill="white">
+    <path d="M12 2l3 7h7l-5.5 4 2.5 7-7-4-7 4 2.5-7L2 9h7z"/>
+  </svg>Premium
+</div>
+
+    
   </div>
 </section>
 
@@ -433,8 +465,31 @@ fetch("/api/track-visit").catch(()=>{});
 })();
 </script>
 
+<script>
+function openPremium(){
+  document.getElementById("premiumModal").classList.add("active");
+}
+function closePremium(){
+  document.getElementById("premiumModal").classList.remove("active");
+}
+
+async function buyPremium(){
+  const r = await fetch("/api/premium-buy",{method:"POST"});
+  const d = await r.json();
+  if(d.ok){
+    alert("Premium activated!");
+    closePremium();
+  }else{
+    alert("Something went wrong");
+  }
+}
+</script>
+
+  
+
 </body>
 </html>
+
 
 
 
