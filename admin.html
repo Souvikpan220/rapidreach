@@ -141,7 +141,7 @@ function startTimer(){
 async function loadData(){
   try{
     const r = await fetch("/api/admin-stats",{
-      headers:{ Authorization: localStorage.adminToken }
+      headers:{}
     });
 
     if(!r.ok){
@@ -183,4 +183,5 @@ async function loadData(){
 
 </body>
 </html>
+
 
