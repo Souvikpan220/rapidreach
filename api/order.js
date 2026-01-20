@@ -20,16 +20,19 @@ export default async function handler(req, res) {
   }
 
   try {
+    const params = new URLSearchParams();
+    params.append("key", process.env.FALCON_API_KEY);
+    params.append("action", "add");
+    params.append("service", service);
+    params.append("link", link);
+    params.append("quantity", 100);
+
     const response = await fetch("https://falconsmmpanel.com/api/v2", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        key: process.env.FALCON_API_KEY,
-        action: "add",
-        service: service,
-        link: link,
-        quantity: 100
-      })
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: params.toString()
     });
 
     const data = await response.json();
@@ -44,6 +47,6 @@ export default async function handler(req, res) {
     });
 
   } catch (err) {
-    return res.status(500).json({ error: "Falcon API error" });
+    return res.status(500).json({ error: "Falcon API connection failed" });
   }
 }
