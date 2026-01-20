@@ -17,6 +17,48 @@
 body{font-family:system-ui;background:#0a0a0a;color:#fff;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 
+  /* === MODERN ICONS FOR "HOW IT WORKS" (ADD ONLY) === */
+#how .grid .card{
+  position:relative;
+  padding-top:60px; /* space for icon */
+  transition:.3s;
+}
+
+#how .grid .card::before{
+  content:"";
+  position:absolute;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:34px;
+  height:34px;
+  opacity:.85;
+  background-size:contain;
+  background-repeat:no-repeat;
+}
+
+/* Step 1 icon */
+#how .grid .card:nth-child(1)::before{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f5c77a' stroke-width='2'%3E%3Crect x='3' y='3' width='7' height='7'/%3E%3Crect x='14' y='3' width='7' height='7'/%3E%3Crect x='3' y='14' width='7' height='7'/%3E%3Crect x='14' y='14' width='7' height='7'/%3E%3C/svg%3E");
+}
+
+/* Step 2 icon */
+#how .grid .card:nth-child(2)::before{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f5c77a' stroke-width='2'%3E%3Cpath d='M3 12h18'/%3E%3Cpath d='M12 3v18'/%3E%3C/svg%3E");
+}
+
+/* Step 3 icon */
+#how .grid .card:nth-child(3)::before{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f5c77a' stroke-width='2'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E");
+}
+
+/* subtle modern hover */
+#how .grid .card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 0 30px rgba(245,199,122,.25);
+}
+
+
   /* === ROTATING STATS STRIP (ADDED) === */
 .stats-strip{
   background:linear-gradient(90deg,#d39b1a,#f5c77a,#d39b1a);
@@ -345,3 +387,4 @@ fetch("/api/track-visit").catch(()=>{});
 
 </body>
 </html>
+
