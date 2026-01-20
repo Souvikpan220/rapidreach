@@ -510,11 +510,41 @@ function closePremium(){
   document.getElementById("premiumModal").classList.remove("active");
 }
 </script>
+
+<script>
+window.buyPremium = async function(){
+  try{
+    const r = await fetch("/api/create-payment", {
+      method: "POST"
+    });
+    const d = await r.json();
+
+    if(d.invoice_url){
+      window.location.href = d.invoice_url;
+    }else{
+      alert("Payment error: " + (d.message || "Unknown error"));
+    }
+  }catch(err){
+    alert("Payment request failed");
+    console.error(err);
+  }
+};
+
+window.openPremium = function(){
+  document.getElementById("premiumModal").classList.add("active");
+};
+
+window.closePremium = function(){
+  document.getElementById("premiumModal").classList.remove("active");
+};
+</script>
+
   
   
 
 </body>
 </html>
+
 
 
 
