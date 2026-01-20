@@ -88,6 +88,7 @@ a{text-decoration:none;color:inherit}
 @keyframes statsScroll{
   from{transform:translateX(0)}
   to{transform:translateX(-50%)}
+}
 
 /* FIX: ensure modals appear above everything */
 .modal{
@@ -188,28 +189,6 @@ color:#fff;border:1px solid #333;border-radius:14px}
 .primary{background:#f5c77a;color:#000;font-weight:700}
 .disabled{opacity:.5;cursor:not-allowed}
 
-<!-- PREMIUM MODAL (ADDED) -->
-<div class="modal" id="premiumModal">
-  <div class="box">
-    <h3>💎 Premium Plan</h3>
-    <p style="margin-top:8px;color:#aaa">$4.99 / Lifetime</p>
-
-    <ul style="text-align:left;margin:20px 0;color:#ccc;line-height:1.7">
-      <li>⚡ Faster delivery</li>
-      <li>🔓 Higher limits</li>
-      <li>🛡️ Priority processing</li>
-      <li>🎯 Exclusive features</li>
-    </ul>
-
-    <p style="color:#f5c77a;font-weight:700">Payment Methods</p>
-    <p style="color:#aaa">Bitcoin • Litecoin</p>
-
-    <button class="primary" onclick="buyPremium()">Buy Premium</button>
-    <button onclick="closePremium()">Cancel</button>
-  </div>
-</div>
-
-  
 
 /* WATER CURSOR */
 .ripple{position:fixed;border:1px solid rgba(245,199,122,.4);
@@ -362,6 +341,28 @@ footer{border-top:1px solid #222;padding:40px;color:#777}
   </div>
 </div>
 
+<!-- PREMIUM MODAL (ADDED) -->
+<div class="modal" id="premiumModal">
+  <div class="box">
+    <h3>💎 Premium Plan</h3>
+    <p style="margin-top:8px;color:#aaa">$4.99 / Lifetime</p>
+
+    <ul style="text-align:left;margin:20px 0;color:#ccc;line-height:1.7">
+      <li>⚡ Faster delivery</li>
+      <li>🔓 Higher limits</li>
+      <li>🛡️ Priority processing</li>
+      <li>🎯 Exclusive features</li>
+    </ul>
+
+    <p style="color:#f5c77a;font-weight:700">Payment Methods</p>
+    <p style="color:#aaa">Bitcoin • Litecoin</p>
+
+    <button class="primary" onclick="buyPremium()">Buy Premium</button>
+    <button onclick="closePremium()">Cancel</button>
+  </div>
+</div>
+  
+
 <script>
 /* TYPING */
 const main="Grow Your Social Media For Free";let i=0;
@@ -497,6 +498,7 @@ async function buyPremium(){
 
 </body>
 </html>
+
 
 
 
