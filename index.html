@@ -126,13 +126,8 @@ a{text-decoration:none;color:inherit}
   fill:none;
   stroke:#f5c77a;
   stroke-width:2.5;
+  transform: rotate(180deg); /* ← ADD THIS */
 }
-
-@keyframes floatArrow{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-8px)}
-}
-
 
 
 
@@ -440,5 +435,6 @@ fetch("/api/track-visit").catch(()=>{});
 
 </body>
 </html>
+
 
 
