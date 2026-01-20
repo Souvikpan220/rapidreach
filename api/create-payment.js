@@ -14,7 +14,7 @@ export default async function handler(req, res) {
       price_currency: "usd",
       order_id: "premium_" + Date.now(),
       order_description: "RapidReach Premium Lifetime",
-      success_url: "https://rapidreach.fun/premium-success",
+      success_url: "https://rapidreach.fun/premium-success.html",
       cancel_url: "https://rapidreach.fun"
     })
   });
