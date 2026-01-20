@@ -420,7 +420,7 @@ async function submitOrder(){
 }
 
 function startCooldownTimer(){
-  const cdText=documen.getElementById("cooldownText");
+  const cdText=document.getElementById("cooldownText");
   const limit=15*60*1000;
   const t=setInterval(()=>{
     const r=limit-(Date.now()-cooldowns[platform]);
@@ -496,10 +496,26 @@ async function buyPremium(){
 }
 </script>
 
+
+<script>
+function openPremium(){
+  const m = document.getElementById("premiumModal");
+  if(!m){
+    alert("Premium modal missing");
+    return;
+  }
+  m.classList.add("active");
+}
+function closePremium(){
+  document.getElementById("premiumModal").classList.remove("active");
+}
+</script>
+  
   
 
 </body>
 </html>
+
 
 
 
