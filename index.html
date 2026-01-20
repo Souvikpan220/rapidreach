@@ -482,15 +482,17 @@ function closePremium(){
   document.getElementById("premiumModal").classList.remove("active");
 }
 
+<script>
 async function buyPremium(){
-  const r = await fetch("/api/premium-buy",{method:"POST"});
+  const r = await fetch("/api/create-payment",{ method:"POST" });
   const d = await r.json();
-  if(d.ok){
-    alert("Premium activated!");
-    closePremium();
-  }else{
-    alert("Something went wrong");
+
+  if(!d.invoice_url){
+    alert("Payment failed");
+    return;
   }
+
+  window.open(d.invoice_url,"_blank");
 }
 </script>
 
@@ -498,6 +500,7 @@ async function buyPremium(){
 
 </body>
 </html>
+
 
 
 
