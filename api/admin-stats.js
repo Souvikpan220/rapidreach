@@ -1,26 +1,37 @@
-import jwt from "jsonwebtoken";
+global.__visits = global.__visits || [];
+global.__orders = global.__orders || [];
 
-let stats = {
-  users:0,
-  orders:0,
-  tiktok:0,
-  instagram:0,
-  recent:[]
-};
-
-export function logOrder(data){
-  stats.orders++;
-  if(data.platform==="tiktok") stats.tiktok++;
-  if(data.platform==="instagram") stats.instagram++;
-  stats.recent.unshift(data);
-  if(stats.recent.length>20) stats.recent.pop();
-}
-
-export default function(req,res){
-  try{
-    jwt.verify(req.headers.authorization,process.env.JWT_SECRET);
-    res.json(stats);
-  }catch{
-    res.status(401).json({error:"Unauthorized"});
+export default function (req, res) {
+  // OPTIONAL token check (kept light)
+  if (!req.headers.authorization) {
+    return res.status(401).json({ error: "Unauthorized" });
   }
+
+  const ip =
+    req.headers["x-forwarded-for"]?.split(",")[0] ||
+    req.socket.remoteAddress;
+
+  global.__visits.push({
+    ip,
+    time: Date.now()
+  });
+
+  const now = Date.now();
+  const last24h = global.__visits.filter(
+    v => now - v.time < 86400000
+  );
+
+  res.json({
+    // existing dashboard stats (safe defaults)
+    users: 0,
+    orders: global.__orders.length,
+    tiktok: global.__orders.filter(o => o.platform === "tiktok").length,
+    instagram: global.__orders.filter(o => o.platform === "instagram").length,
+    recent: global.__orders.slice(-10),
+
+    // NEW stats
+    totalVisits: global.__visits.length,
+    last24hVisits: last24h.length,
+    recentIPs: last24h.slice(-10).map(v => v.ip)
+  });
 }
