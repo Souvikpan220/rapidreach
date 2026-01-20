@@ -114,7 +114,7 @@ async function login(){
     const d = await r.json();
 
     if(d.ok){
-      localStorage.adminToken = d.token;
+      localStorage.adminToken = "admin";
       loginBox.style.display = "none";
       dashboard.style.display = "block";
       startTimer();
@@ -183,3 +183,4 @@ async function loadData(){
 
 </body>
 </html>
+
