@@ -1,52 +1,79 @@
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+global.__orders = global.__orders || [];
+
+/* -------- HELPERS -------- */
+async function sendToDiscord(payload){
+  if(!process.env.DISCORD_WEBHOOK_URL) return;
+
+  await fetch(process.env.DISCORD_WEBHOOK_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+}
+
+async function getCountryFromIP(ip){
+  try{
+    const r = await fetch(`https://ipapi.co/${ip}/json/`);
+    const d = await r.json();
+    return {
+      country: d.country_name || "Unknown",
+      code: d.country_code || "??"
+    };
+  }catch{
+    return { country: "Unknown", code: "??" };
+  }
+}
+
+/* -------- HANDLER -------- */
+export default async function handler(req, res){
+  if(req.method !== "POST"){
+    return res.status(405).json({ ok:false });
   }
 
-  const { platform, link } = req.body;
-
-  if (!platform || !link) {
-    return res.status(400).json({ error: "Missing platform or link" });
+  let raw = "";
+  for await (const chunk of req){
+    raw += chunk;
   }
 
-  const SERVICE_IDS = {
-    tiktok: 2409,
-    instagram: 2506
+  let body;
+  try{
+    body = JSON.parse(raw);
+  }catch{
+    return res.status(400).json({ ok:false });
+  }
+
+  const { platform, link } = body;
+
+  const ip =
+    req.headers["x-forwarded-for"]?.split(",")[0] ||
+    req.socket.remoteAddress;
+
+  const location = await getCountryFromIP(ip);
+
+  const order = {
+    platform,
+    link,
+    ip,
+    country: location.country,
+    time: Date.now()
   };
 
-  const service = SERVICE_IDS[platform];
-  if (!service) {
-    return res.status(400).json({ error: "Invalid platform" });
-  }
+  global.__orders.push(order);
 
-  try {
-    const params = new URLSearchParams();
-    params.append("key", process.env.FALCON_API_KEY);
-    params.append("action", "add");
-    params.append("service", service);
-    params.append("link", link);
-    params.append("quantity", 100);
+  // send order to discord
+  await sendToDiscord({
+    embeds: [{
+      title: "📦 New Order Received",
+      color: 0xf5c77a,
+      fields: [
+        { name: "Platform", value: platform, inline: true },
+        { name: "Country", value: `${location.country} (${location.code})`, inline: true },
+        { name: "IP", value: ip, inline: true },
+        { name: "Link", value: link, inline: false },
+        { name: "Time", value: new Date().toLocaleString(), inline: false }
+      ]
+    }]
+  });
 
-    const response = await fetch("https://falconsmmpanel.com/api/v2", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: params.toString()
-    });
-
-    const data = await response.json();
-
-    if (data.error) {
-      return res.status(400).json({ error: data.error });
-    }
-
-    return res.json({
-      success: true,
-      order_id: data.order
-    });
-
-  } catch (err) {
-    return res.status(500).json({ error: "Falcon API connection failed" });
-  }
+  res.status(200).json({ ok:true });
 }
