@@ -17,6 +17,38 @@
 body{font-family:system-ui;background:#0a0a0a;color:#fff;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 
+  /* === ROTATING STATS STRIP (ADDED) === */
+.stats-strip{
+  background:linear-gradient(90deg,#d39b1a,#f5c77a,#d39b1a);
+  padding:60px 0;
+  overflow:hidden;
+  margin-top:80px;
+}
+.stats-track{
+  display:flex;
+  width:max-content;
+  animation:statsScroll 22s linear infinite;
+}
+.stat-item{
+  min-width:260px;
+  padding:0 40px;
+  text-align:center;
+  color:#000;
+  font-weight:800;
+}
+.stat-num{
+  font-size:3rem;
+}
+.stat-label{
+  opacity:.75;
+  letter-spacing:1px;
+}
+@keyframes statsScroll{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+
+
 /* GOLDEN GLOW */
 .glow{position:fixed;top:0;width:500px;height:100%;
 background:radial-gradient(circle,rgba(245,199,122,.65),transparent 70%);
@@ -116,6 +148,38 @@ footer{border-top:1px solid #222;padding:40px;color:#777}
     <div class="card">🎁 Completely Free - No hidden fees, no credit card required. 100% free forever. </div>
   </div>
 </section>
+  <!-- ROTATING STATS STRIP (ADDED) -->
+<div class="stats-strip">
+  <div class="stats-track">
+    <div class="stat-item">
+      <div class="stat-num" id="statOrders">—</div>
+      <div class="stat-label">ORDERS COMPLETED</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="statViews">—</div>
+      <div class="stat-label">VIEWS DELIVERED</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">24/7</div>
+      <div class="stat-label">SERVICE AVAILABLE</div>
+    </div>
+
+    <!-- duplicate for smooth infinite rotation -->
+    <div class="stat-item">
+      <div class="stat-num" id="statOrders2">—</div>
+      <div class="stat-label">ORDERS COMPLETED</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="statViews2">—</div>
+      <div class="stat-label">VIEWS DELIVERED</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">24/7</div>
+      <div class="stat-label">SERVICE AVAILABLE</div>
+    </div>
+  </div>
+</div>
+
 
 <section id="how">
   <h2>How It Works</h2>
@@ -225,7 +289,7 @@ async function submitOrder(){
 }
 
 function startCooldownTimer(){
-  const cdText=document.getElementById("cooldownText");
+  const cdText=documen.getElementById("cooldownText");
   const limit=15*60*1000;
   const t=setInterval(()=>{
     const r=limit-(Date.now()-cooldowns[platform]);
@@ -265,10 +329,19 @@ if(window.matchMedia("(pointer:fine)").matches){
   <script>
 fetch("/api/track-visit").catch(()=>{});
 </script>
+
+  <script>
+(async ()=>{
+  try{
+    const r = await fetch("/api/falcon-stats");
+    const d = await r.json();
+    statOrders.innerText = d.orders.toLocaleString();
+    statViews.innerText = d.views.toLocaleString();
+    statOrders2.innerText = d.orders.toLocaleString();
+    statViews2.innerText = d.views.toLocaleString();
+  }catch{}
+})();
+</script>
+
 </body>
 </html>
-
-
-
-
-
