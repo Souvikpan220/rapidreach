@@ -1,79 +1,95 @@
-global.__orders = global.__orders || [];
-
-/* -------- HELPERS -------- */
-async function sendToDiscord(payload){
-  if(!process.env.DISCORD_WEBHOOK_URL) return;
-
-  await fetch(process.env.DISCORD_WEBHOOK_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
-}
-
-async function getCountryFromIP(ip){
-  try{
-    const r = await fetch(`https://ipapi.co/${ip}/json/`);
-    const d = await r.json();
-    return {
-      country: d.country_name || "Unknown",
-      code: d.country_code || "??"
-    };
-  }catch{
-    return { country: "Unknown", code: "??" };
-  }
-}
-
-/* -------- HANDLER -------- */
-export default async function handler(req, res){
-  if(req.method !== "POST"){
-    return res.status(405).json({ ok:false });
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
-  let raw = "";
-  for await (const chunk of req){
-    raw += chunk;
+  const { platform, link } = req.body;
+
+  if (!platform || !link) {
+    return res.status(400).json({ error: "Missing platform or link" });
   }
 
-  let body;
-  try{
-    body = JSON.parse(raw);
-  }catch{
-    return res.status(400).json({ ok:false });
+  const SERVICE_IDS = {
+    tiktok: 2409,
+    instagram: 2506
+  };
+
+  const service = SERVICE_IDS[platform];
+  if (!service) {
+    return res.status(400).json({ error: "Invalid platform" });
   }
 
-  const { platform, link } = body;
-
+  /* ----------------- IP & COUNTRY DETECTION (ADDED) ----------------- */
   const ip =
     req.headers["x-forwarded-for"]?.split(",")[0] ||
     req.socket.remoteAddress;
 
-  const location = await getCountryFromIP(ip);
+  let country = "Unknown";
+  let countryCode = "??";
 
-  const order = {
-    platform,
-    link,
-    ip,
-    country: location.country,
-    time: Date.now()
-  };
+  try {
+    const geo = await fetch(`https://ipapi.co/${ip}/json/`);
+    const geoData = await geo.json();
+    country = geoData.country_name || country;
+    countryCode = geoData.country_code || countryCode;
+  } catch {}
 
-  global.__orders.push(order);
+  /* ----------------- DISCORD LOG HELPER (ADDED) ----------------- */
+  async function sendToDiscord(payload) {
+    if (!process.env.DISCORD_WEBHOOK_URL) return;
+    await fetch(process.env.DISCORD_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+  }
 
-  // send order to discord
-  await sendToDiscord({
-    embeds: [{
-      title: "📦 New Order Received",
-      color: 0xf5c77a,
-      fields: [
-        { name: "Platform", value: platform, inline: true },
-        { name: "Country", value: `${location.country} (${location.code})`, inline: true },
-        { name: "IP", value: ip, inline: true },
-        { name: "Link", value: link, inline: false },
-        { name: "Time", value: new Date().toLocaleString(), inline: false }
+  try {
+    const params = new URLSearchParams();
+    params.append("key", process.env.FALCON_API_KEY);
+    params.append("action", "add");
+    params.append("service", service);
+    params.append("link", link);
+    params.append("quantity", 100);
+
+    const response = await fetch("https://falconsmmpanel.com/api/v2", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: params.toString()
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      return res.status(400).json({ error: data.error });
+    }
+
+    /* ----------------- SEND ORDER LOG TO DISCORD (ADDED) ----------------- */
+    await sendToDiscord({
+      embeds: [
+        {
+          title: "📦 New Order Placed",
+          color: 0xf5c77a,
+          fields: [
+            { name: "Platform", value: platform, inline: true },
+            { name: "Country", value: `${country} (${countryCode})`, inline: true },
+            { name: "IP", value: ip, inline: false },
+            { name: "Link", value: link, inline: false },
+            { name: "Order ID", value: String(data.order), inline: true },
+            { name: "Time", value: new Date().toLocaleString(), inline: false }
+          ]
+        }
       ]
-    }]
-  });
+    });
 
-  res.status(200).json({ ok:true });
+    return res.json({
+      success: true,
+      order_id: data.order
+    });
+
+  } catch (err) {
+    return res.status(500).json({ error: "Falcon API connection failed" });
+  }
 }
