@@ -1,16 +1,57 @@
 global.__visits = global.__visits || [];
 global.__orders = global.__orders || [];
 
-export default function handler(req, res) {
+/* -------- HELPERS -------- */
+async function sendToDiscord(payload){
+  if(!process.env.DISCORD_WEBHOOK_URL) return;
+
+  await fetch(process.env.DISCORD_WEBHOOK_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+}
+
+async function getCountryFromIP(ip){
+  try{
+    const r = await fetch(`https://ipapi.co/${ip}/json/`);
+    const d = await r.json();
+    return {
+      country: d.country_name || "Unknown",
+      code: d.country_code || "??"
+    };
+  }catch{
+    return { country: "Unknown", code: "??" };
+  }
+}
+
+/* -------- HANDLER -------- */
+export default async function handler(req, res){
 
   const ip =
     req.headers["x-forwarded-for"]?.split(",")[0] ||
     req.socket.remoteAddress;
 
-  // Track visits
+  const location = await getCountryFromIP(ip);
+
+  // save visit
   global.__visits.push({
     ip,
+    country: location.country,
     time: Date.now()
+  });
+
+  // send visitor to discord
+  await sendToDiscord({
+    embeds: [{
+      title: "👀 New Website Visitor",
+      color: 0x3498db,
+      fields: [
+        { name: "IP", value: ip, inline: true },
+        { name: "Country", value: `${location.country} (${location.code})`, inline: true },
+        { name: "Time", value: new Date().toLocaleString(), inline: false }
+      ]
+    }]
   });
 
   const now = Date.now();
@@ -27,6 +68,9 @@ export default function handler(req, res) {
 
     totalVisits: global.__visits.length,
     last24hVisits: last24h.length,
-    recentIPs: last24h.slice(-10).map(v => v.ip)
+    recentIPs: last24h.slice(-10).map(v => ({
+      ip: v.ip,
+      country: v.country
+    }))
   });
 }
