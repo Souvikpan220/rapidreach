@@ -97,61 +97,87 @@ input{
 <script>
 let dashboardStart = null;
 
+/* ---------- LOGIN ---------- */
 async function login(){
-  const r = await fetch("/api/admin-login",{
-    method:"POST",
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({key:adminKey.value})
-  });
-  const d = await r.json();
-  if(d.ok){
-    localStorage.adminToken=d.token;
-    loadData();
-    startTimer();
-    loginBox.style.display="none";
-    dashboard.style.display="block";
-  }else{
-    alert("Invalid admin key");
+  try{
+    const r = await fetch("/api/admin-login",{
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body:JSON.stringify({ key: adminKey.value })
+    });
+
+    if(!r.ok){
+      alert("Login failed (" + r.status + ")");
+      return;
+    }
+
+    const d = await r.json();
+
+    if(d.ok){
+      localStorage.adminToken = d.token;
+      loginBox.style.display = "none";
+      dashboard.style.display = "block";
+      startTimer();
+      loadData();
+    }else{
+      alert("Invalid admin key");
+    }
+  }catch(err){
+    console.error("LOGIN ERROR:", err);
+    alert("Login error – check console");
   }
 }
 
+/* ---------- TIMER ---------- */
 function startTimer(){
   dashboardStart = Date.now();
   setInterval(()=>{
     timeSpent.innerText =
-      Math.floor((Date.now()-dashboardStart)/1000);
+      Math.floor((Date.now() - dashboardStart) / 1000);
   },1000);
 }
 
+/* ---------- LOAD DASHBOARD DATA ---------- */
 async function loadData(){
-  const r = await fetch("/api/admin-stats",{
-    headers:{Authorization:localStorage.adminToken}
-  });
-  const d = await r.json();
+  try{
+    const r = await fetch("/api/admin-stats",{
+      headers:{ Authorization: localStorage.adminToken }
+    });
 
-  users.innerText=d.users;
-  orders.innerText=d.orders;
-  tt.innerText=d.tiktok;
-  ig.innerText=d.instagram;
+    if(!r.ok){
+      alert("Failed to load admin stats");
+      return;
+    }
 
-  totalVisits.innerText=d.totalVisits;
-  last24h.innerText=d.last24hVisits;
+    const d = await r.json();
 
-  ipList.innerHTML="";
-  d.recentIPs.forEach(ip=>{
-    ipList.innerHTML+=`<div>${ip}</div>`;
-  });
+    users.innerText = d.users ?? 0;
+    orders.innerText = d.orders ?? 0;
+    tt.innerText = d.tiktok ?? 0;
+    ig.innerText = d.instagram ?? 0;
 
-  orderTable.innerHTML="";
-  d.recent.forEach(o=>{
-    orderTable.innerHTML+=`
-      <tr>
-        <td>${o.platform}</td>
-        <td>${o.link}</td>
-        <td>${o.ip}</td>
-        <td>${new Date(o.time).toLocaleString()}</td>
-      </tr>`;
-  });
+    totalVisits.innerText = d.totalVisits ?? 0;
+    last24h.innerText = d.last24hVisits ?? 0;
+
+    ipList.innerHTML = "";
+    (d.recentIPs || []).forEach(ip=>{
+      ipList.innerHTML += `<div>${ip}</div>`;
+    });
+
+    orderTable.innerHTML = "";
+    (d.recent || []).forEach(o=>{
+      orderTable.innerHTML += `
+        <tr>
+          <td>${o.platform || "-"}</td>
+          <td>${o.link || "-"}</td>
+          <td>${o.ip || "-"}</td>
+          <td>${o.time ? new Date(o.time).toLocaleString() : "-"}</td>
+        </tr>`;
+    });
+
+  }catch(err){
+    console.error("DASHBOARD LOAD ERROR:", err);
+  }
 }
 </script>
 
