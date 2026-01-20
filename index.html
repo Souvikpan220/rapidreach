@@ -88,6 +88,14 @@ a{text-decoration:none;color:inherit}
 @keyframes statsScroll{
   from{transform:translateX(0)}
   to{transform:translateX(-50%)}
+
+/* FIX: ensure modals appear above everything */
+.modal{
+  z-index:9999;
+}
+
+
+  
 }
 
 /* === GOLDEN HERO TITLE (ADDED) === */
@@ -336,7 +344,7 @@ footer{border-top:1px solid #222;padding:40px;color:#777}
 <div class="modal" id="serviceModal">
   <div class="box">
     <h3 id="serviceTitle"></h3>
-    <button class="primary" onclick="openLink()">👁 Views (Working)</button>
+    <button class="primary" onclick="openLink()">👁 Views (100 per 15mins)</button>
     <button class="disabled">❤️ Likes (Soon)</button>
     <button class="disabled">➕ Followers (Soon)</button>
     <button onclick="closeService()">Cancel</button>
@@ -489,6 +497,7 @@ async function buyPremium(){
 
 </body>
 </html>
+
 
 
 
