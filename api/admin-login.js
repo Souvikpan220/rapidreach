@@ -1,20 +1,22 @@
 import jwt from "jsonwebtoken";
 
-export default async function(req, res) {
+export default async function (req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ ok: false });
   }
 
   let body = req.body;
 
-  // Fallback for Vercel JSON parsing issues
+  // Fallback JSON parsing (Vercel safe)
   if (!body) {
     try {
-      body = JSON.parse(await new Promise(resolve => {
-        let data = "";
-        req.on("data", chunk => data += chunk);
-        req.on("end", () => resolve(data));
-      }));
+      body = JSON.parse(
+        await new Promise((resolve) => {
+          let data = "";
+          req.on("data", (c) => (data += c));
+          req.on("end", () => resolve(data));
+        })
+      );
     } catch {
       return res.status(400).json({ ok: false });
     }
