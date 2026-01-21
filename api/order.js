@@ -1,3 +1,17 @@
+import { isBlacklisted } from "./blacklist.js";
+
+const ip =
+  req.headers["x-forwarded-for"]?.split(",")[0] ||
+  req.socket.remoteAddress;
+
+if (isBlacklisted(ip)) {
+  return res.status(403).json({
+    blacklisted: true,
+    message: "You are blacklisted"
+  });
+}
+
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -93,3 +107,4 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Falcon API connection failed" });
   }
 }
+
