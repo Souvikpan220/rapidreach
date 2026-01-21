@@ -158,13 +158,6 @@ a{text-decoration:none;color:inherit}
   from { transform: scale(0.85); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
-
-  function showBlacklistPopup() {
-  document.getElementById("blacklistPopup").classList.remove("hidden");
-}
-
-function closeBlacklistPopup() {
-  document.getElementById("blacklistPopup").classList.add("hidden");
   
 
 /* === GOLDEN HERO TITLE (ADDED) === */
@@ -640,6 +633,17 @@ window.closePremium = function(){
     <button class="bl-close" onclick="closeBlacklistPopup()">Close</button>
   </div>
 </div>
+
+
+  <script>
+  function showBlacklistPopup() {
+    document.getElementById("blacklistPopup").classList.remove("hidden");
+  }
+
+  function closeBlacklistPopup() {
+    document.getElementById("blacklistPopup").classList.add("hidden");
+  }
+</script>
 
 
 </body>
