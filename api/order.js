@@ -1,3 +1,22 @@
+import fs from "fs";
+import path from "path";
+
+  // ---------------- BLACKLIST CHECK ----------------
+  try {
+    const blacklistPath = path.join(process.cwd(), "api", "blacklist.json");
+    const blacklistData = JSON.parse(fs.readFileSync(blacklistPath, "utf8"));
+
+    if (blacklistData.blocked_ips.includes(ip)) {
+      return res.status(403).json({
+        blacklisted: true,
+        message: "You are blacklisted. Join our Discord for support."
+      });
+    }
+  } catch (err) {
+    // If blacklist file missing or error, do nothing (fail-safe)
+  }
+
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -93,3 +112,4 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Falcon API connection failed" });
   }
 }
+
