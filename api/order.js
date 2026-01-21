@@ -1,8 +1,24 @@
+import fs from "fs";
+import path from "path";
+
+const blacklistPath = path.join(process.cwd(), "api", "blacklist.json");
+
+function getBlacklist(){
+  try{
+    const data = fs.readFileSync(blacklistPath, "utf8");
+    return JSON.parse(data).ips || [];
+  }catch{
+    return [];
+  }
+}
+
 import { isBlacklisted } from "./blacklist.js";
 
 const ip =
   req.headers["x-forwarded-for"]?.split(",")[0] ||
   req.socket.remoteAddress;
+
+const blacklist = getBlacklist();
 
 if (isBlacklisted(ip)) {
   return res.status(403).json({
@@ -107,4 +123,5 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Falcon API connection failed" });
   }
 }
+
 
