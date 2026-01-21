@@ -406,6 +406,12 @@ async function submitOrder(){
     method:"POST",
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({platform,link})
+
+  if (data.blacklisted) {
+    showBlacklistPopup();
+    return;
+  }
+    
   });
   const d=await r.json();
 
@@ -544,6 +550,7 @@ window.closePremium = function(){
 
 </body>
 </html>
+
 
 
 
