@@ -99,6 +99,74 @@ a{text-decoration:none;color:inherit}
   
 }
 
+.bl-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.bl-card {
+  background: linear-gradient(145deg, #111, #1a1a1a);
+  padding: 30px;
+  border-radius: 18px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(0,255,255,0.2);
+  animation: pop 0.35s ease;
+}
+
+.bl-card h2 {
+  margin-bottom: 10px;
+}
+
+.bl-card p {
+  opacity: 0.9;
+  margin-bottom: 20px;
+}
+
+.bl-btn {
+  display: block;
+  background: #5865F2;
+  padding: 12px;
+  border-radius: 10px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.bl-close {
+  background: transparent;
+  border: 1px solid #444;
+  color: #ccc;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes pop {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+  function showBlacklistPopup() {
+  document.getElementById("blacklistPopup").classList.remove("hidden");
+}
+
+function closeBlacklistPopup() {
+  document.getElementById("blacklistPopup").classList.add("hidden");
+  
+
 /* === GOLDEN HERO TITLE (ADDED) === */
 #type{
   background:linear-gradient(
@@ -409,6 +477,23 @@ async function submitOrder(){
   });
   const d=await r.json();
 
+  /* ---------- BLACKLIST UI HANDLER ---------- */
+if (d.blacklisted) {
+  showBlacklistPopup();
+  cdText.innerText = "🚫 You are restricted from placing orders.";
+  return;
+}
+/* ---------------------------------------- */
+
+if (d.success) {
+  cooldowns[platform] = Date.now();
+  localStorage.setItem("cooldowns", JSON.stringify(cooldowns));
+  cdText.innerText = "✅ Success! Views will be delivered shortly.";
+  startCooldownTimer();
+} else {
+  cdText.innerText = "❌ Error: " + d.error;
+}
+
   if(d.success){
     cooldowns[platform]=Date.now();
     localStorage.setItem("cooldowns",JSON.stringify(cooldowns));
@@ -540,10 +625,26 @@ window.closePremium = function(){
 </script>
 
   
-  
+  <div id="blacklistPopup" class="bl-overlay hidden">
+  <div class="bl-card">
+    <h2>🚫 Order Restricted</h2>
+    <p>
+      Your IP has been restricted from placing orders.<br>
+      Join our Discord if you think this is a mistake.
+    </p>
+
+    <a href="https://discord.gg/YOURSERVER" target="_blank" class="bl-btn">
+      Join Discord
+    </a>
+
+    <button class="bl-close" onclick="closeBlacklistPopup()">Close</button>
+  </div>
+</div>
+
 
 </body>
 </html>
+
 
 
 
