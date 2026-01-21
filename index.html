@@ -462,11 +462,12 @@ async function submitOrder(){
     method:"POST",
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({platform,link})
-
-
-    
   });
   const d=await r.json();
+  if(d.blacklisted){
+  showBlacklistPopup();
+  return;
+}
 
   if(d.success){
     cooldowns[platform]=Date.now();
@@ -619,6 +620,7 @@ window.closePremium = function(){
 
 </body>
 </html>
+
 
 
 
