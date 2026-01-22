@@ -60,7 +60,7 @@ export default async function handler(req, res){
 
   await sendToDiscord({
     embeds: [{
-      title: "👀 Website Visit",
+      title: "website logs",
       color: 0x3498db,
       fields: [
         { name: "🌍 IP Address", value: ip, inline: true },
