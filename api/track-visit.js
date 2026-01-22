@@ -34,12 +34,24 @@ export default async function handler(req, res){
       title: "👀 Website Visit",
       color: 0x3498db,
       fields: [
-        { name: "IP", value: ip, inline: true },
-        { name: "Country", value: `${location.country} (${location.code})`, inline: true },
-        { name: "Time", value: new Date().toLocaleString(), inline: false }
+        { name: "🌍 IP Address", value: ip, inline: true },
+        { name: "📱 Device Type", value: isMobile, inline: true },
+        { name: "🖥️ Device & Browser", value: userAgent, inline: false },
+        { name: "🌐 Location", value: `${location.city}, ${location.country} (${location.code})`, inline: true },
+        { name: "🚩 Proxy / VPN", value: isProxy ? "Yes" : "No", inline: true },
+        { name: "🧭 Visitor", value: isReturning ? "Returning" : "First Visit", inline: true },
+        { name: "🕒 Time", value: new Date().toLocaleString(), inline: false }
+
       ]
     }]
   });
+
+// set cookie silently for return detection
+  res.setHeader(
+    "Set-Cookie",
+    "visited=true; Path=/; Max-Age=31536000; SameSite=Lax"
+  );
+
 
   // no content response (fast & silent)
   res.status(204).end();
