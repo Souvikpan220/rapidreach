@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Premium Dashboard</title>
+</head>
+<body>
+
+<h1>Premium Dashboard</h1>
+<p id="user"></p>
+
+<script>
+(async () => {
+  const idp = localStorage.getItem("premium_idp");
+
+  if (!idp) {
+    window.location.href = "/premium-login.html";
+    return;
+  }
+
+  const res = await fetch("/api/verify-premium-idp", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ idp })
+  });
+
+  const data = await res.json();
+
+  if (!data.success) {
+    localStorage.removeItem("premium_idp");
+    window.location.href = "/premium-login.html";
+    return;
+  }
+
+  document.getElementById("user").innerText =
+    "Welcome, " + data.username;
+})();
+</script>
+
+</body>
+</html>
