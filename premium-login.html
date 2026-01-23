@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Premium Login</title>
+</head>
+<body>
+
+<h2>Premium Access</h2>
+
+<input id="idp" placeholder="Enter Premium IDP">
+<button onclick="login()">Access</button>
+
+<script>
+async function login() {
+  const idp = document.getElementById("idp").value;
+
+  const res = await fetch("/api/verify-premium-idp", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ idp })
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    localStorage.setItem("premium_idp", idp);
+    window.location.href = "/premium-dashboard.html";
+  } else {
+    alert(data.message || "Access denied");
+  }
+}
+</script>
+
+</body>
+</html>
