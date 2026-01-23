@@ -261,9 +261,66 @@ animation:ripple .8s linear}
 
 footer{border-top:1px solid #222;padding:40px;color:#777}
 
-  @media (max-width: 768px) {
-    /* mobile-only overrides go here */
+@media (max-width: 768px) {
+
+  /* HEADER */
+  header{
+    padding:14px 18px;
+    flex-direction:column;
+    gap:10px;
   }
+
+  nav a{
+    margin-left:12px;
+    font-size:0.95rem;
+  }
+
+  /* HERO TEXT */
+  h1{
+    font-size:2.2rem;
+    line-height:1.2;
+  }
+
+  .subtitle{
+    font-size:1.2rem;
+  }
+
+  /* BUTTON STACKING */
+  .buttons{
+    flex-direction:column;
+    gap:16px;
+  }
+
+  .btn{
+    width:100%;
+    justify-content:center;
+  }
+
+  .arrow-btn{
+    margin:auto;
+  }
+
+  /* SECTIONS */
+  section{
+    padding:90px 16px;
+  }
+
+  /* GRID FIX */
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  /* MODALS */
+  .box{
+    width:92%;
+  }
+
+  /* STATS STRIP */
+  .stat-num{
+    font-size:2.2rem;
+  }
+
+}
   
 </style>
 </head>
@@ -655,6 +712,7 @@ window.closePremium = function(){
 
 </body>
 </html>
+
 
 
 
