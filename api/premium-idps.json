@@ -3,5 +3,11 @@
     "username": "user1",
     "active": true,
     "expires": "2026-12-31"
+  },
+
+  "IDP-NEW-BUYER-01": {
+    "username": "telegramBuyer",
+    "active": true,
+    "expires": "2026-06-01"
   }
 }
