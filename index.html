@@ -15,6 +15,68 @@
 <script src="//c1.popads.net/pop.js"></script>
 
 <style>
+
+.hotkey-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(10px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.hotkey-modal {
+  background: #0f0f0f;
+  border-radius: 16px;
+  padding: 30px;
+  width: 320px;
+  box-shadow: 0 0 40px rgba(255,255,255,0.15);
+  animation: popupFade 0.35s ease;
+  text-align: center;
+}
+
+.hotkey-modal h2 {
+  margin-bottom: 10px;
+}
+
+.hotkey-modal input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+.hotkey-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.hotkey-actions button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.hotkey-error {
+  display: none;
+  margin-top: 12px;
+  color: #ff4d4d;
+  font-weight: 600;
+}
+
+@keyframes popupFade {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+</style>
+  
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:system-ui;background:#0a0a0a;color:#fff;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
@@ -336,6 +398,9 @@ footer{border-top:1px solid #222;padding:40px;color:#777}
     <a onclick="scrollToId('how')">How It Works</a>
     <a onclick="scrollToId('faq')">FAQ</a>
     <a href="https://discord.gg/eG3KwUXcmB" target="_blank">Discord</a>
+
+    <!-- 🔑 LOGIN (ADD HERE) -->
+    <a onclick="openHotkeyLogin()">🔑 Login</a>
   </nav>
 </header>
 
@@ -709,21 +774,67 @@ window.closePremium = function(){
   }
 </script>
 
+<div id="hotkeyPopup" class="hotkey-overlay">
+  <div class="hotkey-modal">
+    <h2>Premium Access</h2>
+    <p>Enter your private hotkey</p>
+
+    <input
+      type="password"
+      id="hotkeyInput"
+      placeholder="Enter hotkey"
+      autocomplete="off"
+    />
+
+    <div id="hotkeyError" class="hotkey-error">
+      ❌ Access Denied
+    </div>
+
+    <div class="hotkey-actions">
+      <button id="hotkeySubmit">Unlock</button>
+      <button id="hotkeyClose">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const loginBtn = document.getElementById("premiumLoginBtn");
+const popup = document.getElementById("hotkeyPopup");
+const closeBtn = document.getElementById("hotkeyClose");
+const submitBtn = document.getElementById("hotkeySubmit");
+const input = document.getElementById("hotkeyInput");
+const errorText = document.getElementById("hotkeyError");
+
+loginBtn.onclick = () => {
+  popup.style.display = "flex";
+  input.value = "";
+  errorText.style.display = "none";
+};
+
+closeBtn.onclick = () => {
+  popup.style.display = "none";
+};
+
+submitBtn.onclick = async () => {
+  errorText.style.display = "none";
+
+  const res = await fetch("/api/verify-hotkey", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ hotkey: input.value })
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    window.location.href = "https://discord.gg/XKTYGQEE";
+  } else {
+    errorText.style.display = "block";
+  }
+};
+</script>
+  
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
