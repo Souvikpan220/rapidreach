@@ -1,5 +1,3 @@
-index html
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -323,6 +321,73 @@ footer{border-top:1px solid #222;padding:40px;color:#777}
   }
 
 }
+/* Skeleton Loader */
+#testimonial-skeleton{
+  max-width: 600px;
+  margin: 120px auto;
+  text-align: center;
+}
+
+.s-stars{
+  width: 140px;
+  height: 22px;
+  margin: 0 auto 20px;
+  background: #222;
+  border-radius: 6px;
+}
+
+.s-line{
+  height: 16px;
+  background: #222;
+  margin: 10px auto;
+  border-radius: 6px;
+  width: 90%;
+}
+
+.s-line.short{
+  width: 60%;
+}
+
+.s-user{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.s-avatar{
+  width: 42px;
+  height: 42px;
+  background: #222;
+  border-radius: 50%;
+}
+
+.s-name{
+  width: 120px;
+  height: 14px;
+  background: #222;
+  border-radius: 6px;
+}
+
+/* shimmer */
+#testimonial-skeleton *{
+  animation: shimmer 1.5s infinite linear;
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 25%,
+    #2a2a2a 37%,
+    #1a1a1a 63%
+  );
+  background-size: 400% 100%;
+}
+
+@keyframes shimmer{
+  0%{background-position: 100% 0}
+  100%{background-position: -100% 0}
+}
+
+  
   
 </style>
 </head>
@@ -776,15 +841,35 @@ async function submitHotkey(){
   </div>
 </div>
 
+<!-- Testimonials -->
+<section id="testimonials">
 
+  <!-- Skeleton loader -->
+  <div id="testimonial-skeleton">
+    <div class="s-stars"></div>
+    <div class="s-line"></div>
+    <div class="s-line short"></div>
+    <div class="s-user">
+      <div class="s-avatar"></div>
+      <div class="s-name"></div>
+    </div>
+  </div>
+
+  <!-- Shapo widget (EXACT ID REQUIRED) -->
+  <div id="shapo-widget-5bc7caa61d60d6238c17" style="display:none;"></div>
+
+</section>
+
+<!-- Shapo official embed -->
+<script
+  src="https://cdn.shapo.io/js/embed.js"
+  defer
+  onload="
+    document.getElementById('testimonial-skeleton').style.display='none';
+    document.getElementById('shapo-widget-5bc7caa61d60d6238c17').style.display='block';
+  ">
+</script>
+  
 </body>
 </html>
-
-
-
-
-
-
-
-
 
