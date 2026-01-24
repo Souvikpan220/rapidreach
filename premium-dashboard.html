@@ -32,7 +32,6 @@ body {
   color: #fff;
 }
 
-/* Floating particles */
 .particle {
   position: absolute;
   border: 1px solid var(--gold);
@@ -46,14 +45,12 @@ body {
   to { transform: translateY(-120vh) scale(1.3); }
 }
 
-/* Container */
 .dashboard {
   display: flex;
   gap: 18px;
   align-items: center;
 }
 
-/* Buttons */
 .premium-btn {
   padding: 14px 26px;
   border-radius: 18px;
@@ -67,7 +64,6 @@ body {
   cursor: pointer;
   backdrop-filter: blur(12px);
   transition: all 0.35s ease;
-  box-shadow: 0 0 0 rgba(212,175,55,0);
 }
 
 .premium-btn:hover {
@@ -76,11 +72,6 @@ body {
   box-shadow: 0 0 28px rgba(212,175,55,0.35);
 }
 
-.premium-btn span {
-  font-size: 18px;
-}
-
-/* Arrow button */
 .arrow {
   width: 52px;
   height: 52px;
@@ -88,12 +79,65 @@ body {
   font-size: 22px;
   justify-content: center;
 }
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-box {
+  background: #0b0b0b;
+  border-radius: 22px;
+  padding: 26px;
+  width: 320px;
+  border: 1px solid rgba(212,175,55,0.25);
+}
+
+.modal-box h3 {
+  margin-bottom: 14px;
+}
+
+.option {
+  padding: 14px;
+  border-radius: 14px;
+  margin-bottom: 10px;
+  background: #111;
+  cursor: pointer;
+  text-align: center;
+}
+
+.option.active {
+  background: #f2c879;
+  color: #000;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 12px;
+  border: none;
+}
+
+button.submit {
+  width: 100%;
+  padding: 12px;
+  margin-top: 14px;
+  border-radius: 14px;
+  background: #f2c879;
+  border: none;
+  cursor: pointer;
+}
 </style>
 </head>
 
 <body>
 
-<!-- floating particles -->
 <script>
 for (let i = 0; i < 18; i++) {
   const p = document.createElement("div");
@@ -111,42 +155,82 @@ for (let i = 0; i < 18; i++) {
 <div class="dashboard">
   <button class="premium-btn arrow">›</button>
 
-  <button class="premium-btn" onclick="openService('tiktok')">
-    <span>🎵</span> TikTok
+  <button class="premium-btn" onclick="openPlatform('tiktok')">
+    🎵 TikTok
   </button>
 
-  <button class="premium-btn" onclick="openService('instagram')">
-    <span>📸</span> Instagram
-  </button>
-
-  <button class="premium-btn" onclick="openService('premium')">
-    <span>⭐</span> Premium
+  <button class="premium-btn" onclick="openPlatform('instagram')">
+    📸 Instagram
   </button>
 </div>
 
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h3 id="modalTitle"></h3>
+
+    <div class="option" onclick="selectService('views')">👁 Views</div>
+    <div class="option" onclick="selectService('likes')">❤️ Likes</div>
+
+    <input id="link" placeholder="Paste link here">
+    <button class="submit" onclick="submitOrder()">Submit</button>
+  </div>
+</div>
+
 <script>
-(async () => {
-  const idp = localStorage.getItem("premium_idp");
-  if (!idp) {
-    window.location.href = "/premium-login.html";
+let currentPlatform = "";
+let currentService = "";
+
+const SERVICES = {
+  tiktok: { views: { id: 2409, qty: 800 }, likes: { id: 2328, qty: 50 } },
+  instagram: { views: { id: 2508, qty: 900 }, likes: { id: 2806, qty: 50 } }
+};
+
+function canUse(key, mins) {
+  const last = localStorage.getItem(key);
+  return !last || Date.now() - last > mins * 60000;
+}
+
+function openPlatform(p) {
+  currentPlatform = p;
+  document.getElementById("modalTitle").innerText =
+    p === "tiktok" ? "TikTok Services" : "Instagram Services";
+  document.getElementById("modal").style.display = "flex";
+}
+
+function selectService(s) {
+  currentService = s;
+  document.querySelectorAll(".option").forEach(o => o.classList.remove("active"));
+  event.target.classList.add("active");
+}
+
+async function submitOrder() {
+  const key = `${currentPlatform}_${currentService}`;
+  const cooldown =
+    key === "instagram_likes" ? 20 : 10;
+
+  if (!canUse(key, cooldown)) {
+    alert(currentPlatform === "tiktok"
+      ? "TikTok server ratelimit"
+      : "Insta server ratelimit");
     return;
   }
 
-  const res = await fetch("/api/verify-premium-idp", {
+  const link = document.getElementById("link").value;
+  const svc = SERVICES[currentPlatform][currentService];
+
+  await fetch("/api/premium-place-order", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ idp })
+    body: JSON.stringify({
+      service: svc.id,
+      quantity: svc.qty,
+      link
+    })
   });
 
-  const data = await res.json();
-  if (!data.success) {
-    localStorage.removeItem("premium_idp");
-    window.location.href = "/premium-login.html";
-  }
-})();
-
-function openService(type) {
-  alert(type.toUpperCase() + " premium service coming here");
+  localStorage.setItem(key, Date.now());
+  alert("Order placed successfully");
+  document.getElementById("modal").style.display = "none";
 }
 </script>
 
