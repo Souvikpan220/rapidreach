@@ -566,7 +566,7 @@ if (d.success) {
 
 function startCooldownTimer(){
   const cdText=document.getElementById("cooldownText");
-  const limit=15*60*1000;
+  const limit=30*60*1000;
   const t=setInterval(()=>{
     const r=limit-(Date.now()-cooldowns[platform]);
     if(r<=0){
@@ -779,5 +779,6 @@ async function submitHotkey(){
 
 </body>
 </html>
+
 
 
