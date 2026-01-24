@@ -387,7 +387,36 @@ footer{border-top:1px solid #222;padding:40px;color:#777}
   100%{background-position: -100% 0}
 }
 
-  
+/* FIX: Shapo text visibility on dark background */
+#testimonials [class*="shapo"],
+#testimonials p,
+#testimonials span,
+#testimonials div {
+  color: #eaeaea !important;
+}
+
+/* Make review text slightly brighter */
+#testimonials [class*="review"],
+#testimonials [class*="content"] {
+  color: #f5f5f5 !important;
+}
+
+/* Stars stay golden */
+#testimonials svg {
+  fill: #f5c77a !important;
+}
+
+/* Author name */
+#testimonials [class*="name"] {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* Date text */
+#testimonials [class*="date"] {
+  color: #aaa !important;
+}
+
   
 </style>
 </head>
@@ -873,5 +902,6 @@ async function submitHotkey(){
   
 </body>
 </html>
+
 
 
