@@ -338,6 +338,7 @@ footer{border-top:1px solid #222;padding:40px;color:#777}
     <a onclick="scrollToId('how')">How It Works</a>
     <a onclick="scrollToId('faq')">FAQ</a>
     <a href="https://discord.gg/eG3KwUXcmB" target="_blank">Discord</a>
+    <a onclick="openHotkeyLogin()">🔑 Login</a>
   </nav>
 </header>
 
@@ -700,6 +701,45 @@ window.closePremium = function(){
   </div>
 </div>
 
+  <script>
+function openHotkeyLogin(){
+  document.getElementById("hotkeyModal").classList.add("active");
+  document.getElementById("hotkeyInput").value = "";
+  document.getElementById("hotkeyError").style.display = "none";
+}
+
+function closeHotkeyLogin(){
+  document.getElementById("hotkeyModal").classList.remove("active");
+}
+
+async function submitHotkey(){
+  const key = document.getElementById("hotkeyInput").value.trim();
+  const err = document.getElementById("hotkeyError");
+
+  err.style.display = "none";
+  if(!key) return;
+
+  try{
+    const r = await fetch("/api/verify-hotkey", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ hotkey: key })
+    });
+
+    const d = await r.json();
+
+    if(d.success){
+      window.location.href = "https://discord.gg/XKTYGQEE";
+    }else{
+      err.style.display = "block";
+    }
+  }catch{
+    err.style.display = "block";
+  }
+}
+</script>
+
+
 
   <script>
   function showBlacklistPopup() {
@@ -711,6 +751,32 @@ window.closePremium = function(){
   }
 </script>
 
+  <!-- HOTKEY LOGIN MODAL (ADDED) -->
+<div class="modal" id="hotkeyModal">
+  <div class="box">
+    <h3>🔐 Premium Access</h3>
+    <p style="color:#aaa;margin-top:6px">
+      Enter your private hotkey
+    </p>
+
+    <input
+      id="hotkeyInput"
+      type="password"
+      placeholder="Enter hotkey"
+      autocomplete="off"
+    >
+
+    <p id="hotkeyError"
+       style="display:none;color:#ff4d4d;font-weight:700;margin-top:10px">
+      ❌ Access Denied
+    </p>
+
+    <button class="primary" onclick="submitHotkey()">Unlock</button>
+    <button onclick="closeHotkeyLogin()">Cancel</button>
+  </div>
+</div>
+
 
 </body>
 </html>
+
