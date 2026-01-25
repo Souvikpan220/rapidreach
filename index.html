@@ -417,8 +417,6 @@ footer{border-top:1px solid #222;padding:40px;color:#777}
   color: #aaa !important;
 }
 
-
-<style>
   /* existing CSS stays exactly as it is above */
 
 /* ===============================
@@ -623,7 +621,16 @@ footer{border-top:1px solid #222;padding:40px;color:#777}
 
 </section>
 
-<footer>© 2026 RapidReach • All Rights Reserved</footer>
+<footer>
+  <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap">
+    <a href="#" id="tosLink">Terms of Service</a>
+    <a href="#" id="contactLink">Contact</a>
+  </div>
+
+  <div style="margin-top:20px">
+    © 2026 RapidReach • All Rights Reserved
+  </div>
+</footer>
 
 <!-- SERVICE MODAL -->
 <div class="modal" id="serviceModal">
@@ -804,6 +811,7 @@ function openPremium(){
 function closePremium(){
   document.getElementById("premiumModal").classList.remove("active");
 }
+</script>
 
 <script>
 async function buyPremium(){
@@ -965,7 +973,7 @@ async function submitHotkey(){
 </script>
 
 <!-- START: Popup Modal -->
-<div id="popupOverlay" class="popup-overlay">
+<div id="popupOverlay" class="popup-overlay" style="display:none;">
   <div class="popup-box">
 
     <h2 id="popupTitle">Title</h2>
@@ -1031,5 +1039,6 @@ popupOverlay.onclick = e => {
   
 </body>
 </html>
+
 
 
