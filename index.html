@@ -417,6 +417,64 @@ footer{border-top:1px solid #222;padding:40px;color:#777}
   color: #aaa !important;
 }
 
+
+<style>
+  /* existing CSS stays exactly as it is above */
+
+  /* ===============================
+     POPUP MODAL (ADDED - DO NOT TOUCH)
+     =============================== */
+
+  .popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .popup-box {
+    background: #000;
+    color: #fff;
+    max-width: 720px;
+    width: 90%;
+    max-height: 85vh;
+    padding: 30px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .popup-box h2 {
+    color: #c8b24a;
+    margin-bottom: 10px;
+  }
+
+  .popup-date {
+    opacity: 0.6;
+    margin-bottom: 20px;
+  }
+
+  .popup-content {
+    overflow-y: auto;
+    max-height: 50vh;
+    padding-right: 10px;
+    line-height: 1.7;
+  }
+
+  .popup-close-btn {
+    margin-top: 20px;
+    padding: 10px 22px;
+    background: #c8b24a;
+    color: #000;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+</style>
+
   
 </style>
 </head>
@@ -899,9 +957,72 @@ async function submitHotkey(){
     document.getElementById('shapo-widget-5bc7caa61d60d6238c17').style.display='block';
   ">
 </script>
+
+<!-- START: Popup Modal -->
+<div id="popupOverlay" class="popup-overlay">
+  <div class="popup-box">
+
+    <h2 id="popupTitle">Title</h2>
+    <p class="popup-date">Last updated: January 1, 2026</p>
+
+    <div id="popupContent" class="popup-content"></div>
+
+    <button class="popup-close-btn">Close</button>
+  </div>
+</div>
+<!-- END: Popup Modal -->
+
+<script>
+const popupOverlay = document.getElementById("popupOverlay");
+const popupTitle = document.getElementById("popupTitle");
+const popupContent = document.getElementById("popupContent");
+const closeBtn = document.querySelector(".popup-close-btn");
+
+// TOS Content
+const tosContent = `
+<h3>1. Acceptance of Terms</h3>
+<p>By accessing and using Viraltok.cc, you agree to be bound by these Terms.</p>
+
+<h3>2. Service Description</h3>
+<p>Viraltok.cc provides free social media engagement services including likes, followers, views, and comments.</p>
+
+<h3>3. No Guarantees</h3>
+<p>All services are provided "as is" without warranties of any kind.</p>
+`;
+
+// Contact Content
+const contactContent = `
+<p>Email: <strong>viraltok.cc@proton.me</strong></p>
+<p>Business Address:</p>
+<p>
+Mei Hao Shang Jun 22hao Lou 1501<br>
+Taizhou - Hailing District<br>
+Jiangsu, China
+</p>
+<p>Phone: +86 13013803664</p>
+`;
+
+document.getElementById("tosLink")?.addEventListener("click", e => {
+  e.preventDefault();
+  popupTitle.textContent = "Terms of Service";
+  popupContent.innerHTML = tosContent;
+  popupOverlay.style.display = "flex";
+});
+
+document.getElementById("contactLink")?.addEventListener("click", e => {
+  e.preventDefault();
+  popupTitle.textContent = "Contact";
+  popupContent.innerHTML = contactContent;
+  popupOverlay.style.display = "flex";
+});
+
+closeBtn.onclick = () => popupOverlay.style.display = "none";
+popupOverlay.onclick = e => {
+  if (e.target === popupOverlay) popupOverlay.style.display = "none";
+};
+</script>
+
   
 </body>
 </html>
-
-
 
