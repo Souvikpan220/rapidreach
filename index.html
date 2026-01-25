@@ -421,58 +421,64 @@ footer{border-top:1px solid #222;padding:40px;color:#777}
 <style>
   /* existing CSS stays exactly as it is above */
 
-  /* ===============================
-     POPUP MODAL (ADDED - DO NOT TOUCH)
-     =============================== */
+/* ===============================
+   POPUP MODAL – FIXED (SAFE)
+   =============================== */
 
-  .popup-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.8);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-  }
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+}
 
-  .popup-box {
-    background: #000;
-    color: #fff;
-    max-width: 720px;
-    width: 90%;
-    max-height: 85vh;
-    padding: 30px;
-    border-radius: 12px;
-    overflow: hidden;
-  }
+.popup-box {
+  background: #000;
+  color: #fff;
+  width: 90%;
+  max-width: 720px;
+  max-height: 85vh;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+  display: flex;
+  flex-direction: column;
+}
 
-  .popup-box h2 {
-    color: #c8b24a;
-    margin-bottom: 10px;
-  }
+.popup-box h2 {
+  color: #c8b24a;
+  margin-bottom: 6px;
+}
 
-  .popup-date {
-    opacity: 0.6;
-    margin-bottom: 20px;
-  }
+.popup-date {
+  opacity: 0.6;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
 
-  .popup-content {
-    overflow-y: auto;
-    max-height: 50vh;
-    padding-right: 10px;
-    line-height: 1.7;
-  }
+.popup-content {
+  flex: 1;
+  overflow-y: auto;
+  line-height: 1.7;
+  padding-right: 10px;
+}
 
-  .popup-close-btn {
-    margin-top: 20px;
-    padding: 10px 22px;
-    background: #c8b24a;
-    color: #000;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 6px;
-  }
+.popup-close-btn {
+  margin-top: 24px;
+  padding: 12px;
+  background: #c8b24a;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
 </style>
 
   
@@ -1025,4 +1031,5 @@ popupOverlay.onclick = e => {
   
 </body>
 </html>
+
 
