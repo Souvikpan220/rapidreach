@@ -962,7 +962,7 @@ section:not(#how) .grid .card {
 <script>
 /* TYPING */
 const main="Get & Earn <em>Followers</em> and <em>Views</em> For Free";let i=0;
-(function t(){if(i<main.length){type.innerHTML+=main[i++];setTimeout(t,80)}})();
+(function t(){if(i<main.length){type.innerHTML = main.slice(0, ++i);setTimeout(t,80)}})();
 const sub="Boost your social media presence with our free services !!";let j=0;
 (function s(){if(j<sub.length){document.getElementById("sub").innerHTML+=sub[j++];setTimeout(s,45)}})();
 
@@ -1329,6 +1329,7 @@ popupOverlay.onclick = e => {
   
 </body>
 </html>
+
 
 
 
