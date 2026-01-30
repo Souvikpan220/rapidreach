@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <meta charset="UTF-8">
@@ -1070,7 +1070,57 @@ section:not(#how):not(#services) .grid .card:nth-child(3)::before {
   transform: translateY(-2px);
   box-shadow: 0 18px 45px rgba(37,99,235,0.45);
 }
-  
+
+/* =========================================
+   HERO FREE BADGE – GLOWING PILL
+   ========================================= */
+
+.free-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  margin: 0 auto 22px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2563eb;
+  background: linear-gradient(135deg, #ede9fe, #dbeafe);
+  box-shadow:
+    0 0 0 1px rgba(99,102,241,0.15),
+    0 10px 30px rgba(99,102,241,0.25),
+    0 0 40px rgba(168,85,247,0.35);
+  animation: badgeGlow 3s ease-in-out infinite;
+}
+
+/* Center it properly */
+.hero {
+  text-align: center;
+}
+
+/* Soft pulsing glow */
+@keyframes badgeGlow {
+  0% {
+    box-shadow:
+      0 0 0 1px rgba(99,102,241,0.15),
+      0 10px 30px rgba(99,102,241,0.25),
+      0 0 30px rgba(168,85,247,0.25);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(99,102,241,0.25),
+      0 15px 45px rgba(99,102,241,0.35),
+      0 0 50px rgba(168,85,247,0.45);
+  }
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(99,102,241,0.15),
+      0 10px 30px rgba(99,102,241,0.25),
+      0 0 30px rgba(168,85,247,0.25);
+  }
+}
+
+
 </style>
 </style>
 </head>
@@ -1112,6 +1162,10 @@ section:not(#how):not(#services) .grid .card:nth-child(3)::before {
 </header>
 
 <section class="hero">
+<!-- ===== FREE BADGE (ADDED) ===== -->
+<div class="free-badge">
+  🎁 100% Free – No card required
+</div>
   <h1 id="type"></h1>
   <p id="sub" class="subtitle"></p>
 
@@ -1724,6 +1778,7 @@ popupOverlay.onclick = e => {
   
 </body>
 </html>
+
 
 
 
