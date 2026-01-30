@@ -711,6 +711,40 @@ section:not(#how) .grid .card {
   font-weight: 700 !important;
 }
 
+/* =========================================
+   HERO TEXT STYLE – MATCH REFERENCE IMAGE
+   ========================================= */
+
+/* Base hero title */
+#type {
+  font-size: 3.8rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #0b1220 !important;
+  background: none !important;
+  -webkit-text-fill-color: #0b1220 !important;
+  text-shadow: none !important;
+}
+
+/* Blue emphasized words */
+#type em {
+  font-family: "Georgia", "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 700;
+  color: #3b82f6 !important;
+  -webkit-text-fill-color: #3b82f6 !important;
+  text-shadow: 0 6px 18px rgba(59,130,246,0.35);
+}
+
+/* Subtitle */
+#sub {
+  margin-top: 18px;
+  font-size: 1.15rem;
+  color: #475569 !important;
+  font-weight: 500;
+  max-width: 760px;
+}
+
   
 </style>
 
@@ -927,7 +961,7 @@ section:not(#how) .grid .card {
 
 <script>
 /* TYPING */
-const main="Grow Your Social Media For Free";let i=0;
+const main="Get & Earn <em>Followers</em> and <em>Views</em> For Free";let i=0;
 (function t(){if(i<main.length){type.innerHTML+=main[i++];setTimeout(t,80)}})();
 const sub="Boost your social media presence with our free services !!";let j=0;
 (function s(){if(j<sub.length){document.getElementById("sub").innerHTML+=sub[j++];setTimeout(s,45)}})();
@@ -1295,6 +1329,7 @@ popupOverlay.onclick = e => {
   
 </body>
 </html>
+
 
 
 
