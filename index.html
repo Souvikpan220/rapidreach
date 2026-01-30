@@ -764,10 +764,89 @@ section:not(#how) .grid .card {
 .t3 { top: 65%; left: 35%; animation-duration: 28s; }
 .i3 { top: 25%; left: 55%; animation-duration: 30s; }
 
-  
-</style>
+/* =========================================
+   OUR SERVICES – CLEAN LIGHT UI
+   ========================================= */
+
+.services-section {
+  padding: 120px 20px;
+  text-align: center;
+}
+
+.services-header {
+  margin-bottom: 60px;
+}
+
+.services-tag {
+  display: inline-block;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  color: #2563eb;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.services-header h2 {
+  font-size: 2.6rem;
+  color: #0b1220;
+  margin-bottom: 12px;
+}
+
+.services-sub {
+  color: #475569;
+  font-size: 1.05rem;
+}
+
+/* Grid */
+.services-grid {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 32px;
+}
+
+/* Card */
+.service-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 36px 28px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.06);
+  transition: 0.35s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px rgba(37,99,235,0.18);
+}
+
+/* Icon */
+.service-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 18px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #dbeafe, #ede9fe);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+/* Text */
+.service-card h4 {
+  font-size: 1.15rem;
+  color: #0b1220;
+  margin-bottom: 6px;
+}
+
+.service-card p {
+  font-size: 0.95rem;
+  color: #64748b;
+}
 
   
+</style>
 </style>
 </head>
 
@@ -850,6 +929,71 @@ section:not(#how) .grid .card {
     <div class="card">🎁 Completely Free - No hidden fees, no credit card required. 100% free forever. </div>
   </div>
 </section>
+<!-- ===============================
+     OUR SERVICES SECTION (ADDED)
+     =============================== -->
+<section id="services" class="services-section">
+  <div class="services-header">
+    <span class="services-tag">OUR SERVICES</span>
+    <h2>Everything you need</h2>
+    <p class="services-sub">
+      A complete range of services to boost your online presence
+    </p>
+  </div>
+
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-icon">👥</div>
+      <h4>Followers</h4>
+      <p>Increase your followers</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">❤️</div>
+      <h4>Likes</h4>
+      <p>Boost engagement</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">👁️</div>
+      <h4>Views</h4>
+      <p>More visibility</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">💬</div>
+      <h4>Comments</h4>
+      <p>More interactions</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🔁</div>
+      <h4>Shares</h4>
+      <p>Expand your reach</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🔖</div>
+      <h4>Saves</h4>
+      <p>More saves</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">▶️</div>
+      <h4>Stories</h4>
+      <p>Stories & reels views</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">⏱️</div>
+      <h4>Watch Time</h4>
+      <p>Watch time</p>
+    </div>
+
+  </div>
+</section>
+  
   <!-- ROTATING STATS STRIP (ADDED) -->
 <div class="stats-strip">
   <div class="stats-track">
@@ -1355,6 +1499,7 @@ popupOverlay.onclick = e => {
   
 </body>
 </html>
+
 
 
 
