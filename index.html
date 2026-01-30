@@ -19,41 +19,6 @@
 body{font-family:system-ui;background:#0a0a0a;color:#fff;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 
-  /* === MODERN ICONS FOR "HOW IT WORKS" (ADD ONLY) === */
-#how .grid .card{
-  position:relative;
-  padding-top:60px; /* space for icon */
-  transition:.3s;
-}
-
-#how .grid .card::before{
-  content:"";
-  position:absolute;
-  top:20px;
-  left:50%;
-  transform:translateX(-50%);
-  width:34px;
-  height:34px;
-  opacity:.85;
-  background-size:contain;
-  background-repeat:no-repeat;
-}
-
-/* Step 1 icon */
-#how .grid .card:nth-child(1)::before{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f5c77a' stroke-width='2'%3E%3Crect x='3' y='3' width='7' height='7'/%3E%3Crect x='14' y='3' width='7' height='7'/%3E%3Crect x='3' y='14' width='7' height='7'/%3E%3Crect x='14' y='14' width='7' height='7'/%3E%3C/svg%3E");
-}
-
-/* Step 2 icon */
-#how .grid .card:nth-child(2)::before{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f5c77a' stroke-width='2'%3E%3Cpath d='M3 12h18'/%3E%3Cpath d='M12 3v18'/%3E%3C/svg%3E");
-}
-
-/* Step 3 icon */
-#how .grid .card:nth-child(3)::before{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f5c77a' stroke-width='2'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E");
-}
-
 /* subtle modern hover */
 #how .grid .card:hover{
   transform:translateY(-4px);
@@ -1157,6 +1122,42 @@ section:not(#how):not(#services) .grid .card:nth-child(3)::before {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'%3E%3Cpath d='M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
 }
 
+/* =========================================
+   HOW IT WORKS – FINAL ICONS (WORKING)
+   ========================================= */
+
+/* Icon base */
+#how .grid .card::before {
+  content: "";
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #dbeafe, #ede9fe);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 26px;
+  box-shadow: 0 10px 30px rgba(37,99,235,0.18);
+}
+
+/* STEP 1 – Choose Service */
+#how .grid .card:nth-child(1)::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'%3E%3Crect x='3' y='3' width='7' height='7'/%3E%3Crect x='14' y='3' width='7' height='7'/%3E%3Crect x='3' y='14' width='7' height='7'/%3E%3Crect x='14' y='14' width='7' height='7'/%3E%3C/svg%3E");
+}
+
+/* STEP 2 – Paste Link */
+#how .grid .card:nth-child(2)::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'%3E%3Cpath d='M10 13a5 5 0 0 0 7.07 0l1.42-1.42a5 5 0 0 0-7.07-7.07L10 5'/%3E%3Cpath d='M14 11a5 5 0 0 0-7.07 0L5.5 12.5a5 5 0 0 0 7.07 7.07L14 19'/%3E%3C/svg%3E");
+}
+
+/* STEP 3 – Get Views */
+#how .grid .card:nth-child(3)::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'%3E%3Cpath d='M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+}
+
 
 </style>
 </style>
@@ -1815,6 +1816,7 @@ popupOverlay.onclick = e => {
   
 </body>
 </html>
+
 
 
 
