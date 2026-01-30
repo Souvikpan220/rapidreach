@@ -485,6 +485,72 @@ footer a {
   font-weight: 700;
   cursor: pointer;
 }
+
+/* ===== DISABLE BLACK GLOW EFFECT (ADDED) ===== */
+body::before,
+body::after,
+.glow,
+.bg-glow,
+.background-glow {
+  display: none !important;
+  opacity: 0 !important;
+  filter: none !important;
+}
+
+
+/* ===== CLEAN FLOATING UI BACKGROUND (ADDED) ===== */
+
+body {
+  background: #f6f8ff !important;
+  overflow-x: hidden;
+}
+
+.floating-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.float-logo {
+  position: absolute;
+  width: 48px;
+  opacity: 0.15;
+  animation: float 18s linear infinite;
+}
+
+.insta { top: 15%; left: 10%; animation-duration: 22s; }
+.yt { top: 60%; left: 80%; animation-duration: 26s; }
+.tiktok { top: 75%; left: 20%; animation-duration: 20s; }
+
+.color-ball {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: float 14s ease-in-out infinite;
+}
+
+.pink { background: #ff6ec7; top: 30%; left: 50%; }
+.blue { background: #6ea8ff; top: 70%; left: 60%; }
+.purple { background: #b983ff; top: 40%; left: 80%; }
+.green { background: #5dffb0; top: 80%; left: 30%; }
+
+@keyframes float {
+  0% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-40px) translateX(20px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+
+/* Keep main content above bg */
+main, header, section, .container {
+  position: relative;
+  z-index: 2;
+}
+
+  
 </style>
 
   
@@ -492,6 +558,20 @@ footer a {
 </head>
 
 <body>
+
+
+<!-- ===== FLOATING BACKGROUND (ADDED) ===== -->
+<div class="floating-bg">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" class="float-logo insta">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" class="float-logo yt">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/TikTok_logo.svg" class="float-logo tiktok">
+
+  <span class="color-ball pink"></span>
+  <span class="color-ball blue"></span>
+  <span class="color-ball purple"></span>
+  <span class="color-ball green"></span>
+</div>
+
 
 <div class="glow left"></div>
 <div class="glow right"></div>
@@ -1037,9 +1117,24 @@ popupOverlay.onclick = e => {
 };
 </script>
 
+
+<!-- ===== DISABLE CURSOR WATER EFFECT (ADDED) ===== -->
+<script>
+  window.addEventListener("load", () => {
+    const cursorEffects = document.querySelectorAll(
+      ".cursor, .cursor-dot, .cursor-circle, canvas"
+    );
+    cursorEffects.forEach(el => el.remove());
+
+    document.onmousemove = null;
+  });
+</script>
+
+
   
 </body>
 </html>
+
 
 
 
