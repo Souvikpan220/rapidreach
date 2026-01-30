@@ -925,14 +925,6 @@ section:not(#how):not(#services) .grid .card:nth-child(3)::before {
 }
 
 /* Step icon container (already exists via ::before, enhance it) */
-#how .grid .card::before {
-  width: 56px !important;
-  height: 56px !important;
-  border-radius: 18px !important;
-  background: linear-gradient(135deg, #dbeafe, #ede9fe) !important;
-  top: 24px !important;
-  box-shadow: 0 10px 30px rgba(37,99,235,0.15);
-}
 
 /* Push text below icon */
 #how .grid .card {
@@ -963,26 +955,6 @@ section:not(#how):not(#services) .grid .card:nth-child(3)::before {
    ========================================= */
 
 /* Base icon container already exists, we fill it */
-#how .grid .card::before {
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  background-size: 26px !important;
-}
-
-/* STEP 1 – Choose Service (Grid icon) */
-#how .grid .card:nth-child(1)::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'%3E%3Crect x='3' y='3' width='7' height='7'/%3E%3Crect x='14' y='3' width='7' height='7'/%3E%3Crect x='3' y='14' width='7' height='7'/%3E%3Crect x='14' y='14' width='7' height='7'/%3E%3C/svg%3E");
-}
-
-/* STEP 2 – Paste Link (Link icon) */
-#how .grid .card:nth-child(2)::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'%3E%3Cpath d='M10 13a5 5 0 0 0 7.07 0l1.42-1.42a5 5 0 0 0-7.07-7.07L10 5'/%3E%3Cpath d='M14 11a5 5 0 0 0-7.07 0L5.5 12.5a5 5 0 0 0 7.07 7.07L14 19'/%3E%3C/svg%3E");
-}
-
-/* STEP 3 – Get Views (Eye icon) */
-#how .grid .card:nth-child(3)::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'%3E%3Cpath d='M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
-}
 
 /* =========================================
    SERVICE MODAL BUTTONS – VISIBILITY FIX
@@ -1086,11 +1058,19 @@ section:not(#how):not(#services) .grid .card:nth-child(3)::before {
   }
 }
 
-/* =========================================
-   HOW IT WORKS – STEP LOGOS (FINAL FIX)
-   ========================================= */
-
+1
 /* Base icon container */
+
+/* =====================================================
+   HOW IT WORKS – ICONS (FINAL & GUARANTEED VISIBLE)
+   ===================================================== */
+
+#how .grid .card {
+  position: relative;
+  overflow: visible;
+}
+
+/* Icon container */
 #how .grid .card::before {
   content: "";
   position: absolute;
@@ -1100,62 +1080,32 @@ section:not(#how):not(#services) .grid .card:nth-child(3)::before {
   width: 56px;
   height: 56px;
   border-radius: 18px;
-  background: linear-gradient(135deg, #dbeafe, #ede9fe);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 26px;
-  box-shadow: 0 10px 30px rgba(37,99,235,0.18);
+  background-color: #eef2ff;
+  box-shadow: 0 10px 30px rgba(37,99,235,0.25);
+  z-index: 5; /* 🔥 THIS IS THE KEY FIX */
 }
 
-/* STEP 1 – Choose Service (Grid icon) */
-#how .grid .card:nth-child(1)::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'%3E%3Crect x='3' y='3' width='7' height='7'/%3E%3Crect x='14' y='3' width='7' height='7'/%3E%3Crect x='3' y='14' width='7' height='7'/%3E%3Crect x='14' y='14' width='7' height='7'/%3E%3C/svg%3E");
-}
-
-/* STEP 2 – Paste Link (Link icon) */
-#how .grid .card:nth-child(2)::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'%3E%3Cpath d='M10 13a5 5 0 0 0 7.07 0l1.42-1.42a5 5 0 0 0-7.07-7.07L10 5'/%3E%3Cpath d='M14 11a5 5 0 0 0-7.07 0L5.5 12.5a5 5 0 0 0 7.07 7.07L14 19'/%3E%3C/svg%3E");
-}
-
-/* STEP 3 – Get Views (Eye icon) */
-#how .grid .card:nth-child(3)::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'%3E%3Cpath d='M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
-}
-
-/* =========================================
-   HOW IT WORKS – FINAL ICONS (WORKING)
-   ========================================= */
-
-/* Icon base */
-#how .grid .card::before {
-  content: "";
-  position: absolute;
-  top: 28px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 56px;
-  height: 56px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #dbeafe, #ede9fe);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 26px;
-  box-shadow: 0 10px 30px rgba(37,99,235,0.18);
+/* Push text down so it doesn't overlap */
+#how .grid .card {
+  padding-top: 90px !important;
 }
 
 /* STEP 1 – Choose Service */
 #how .grid .card:nth-child(1)::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'%3E%3Crect x='3' y='3' width='7' height='7'/%3E%3Crect x='14' y='3' width='7' height='7'/%3E%3Crect x='3' y='14' width='7' height='7'/%3E%3Crect x='14' y='14' width='7' height='7'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231d4ed8' stroke-width='2'%3E%3Crect x='3' y='3' width='7' height='7'/%3E%3Crect x='14' y='3' width='7' height='7'/%3E%3Crect x='3' y='14' width='7' height='7'/%3E%3Crect x='14' y='14' width='7' height='7'/%3E%3C/svg%3E");
 }
 
 /* STEP 2 – Paste Link */
 #how .grid .card:nth-child(2)::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'%3E%3Cpath d='M10 13a5 5 0 0 0 7.07 0l1.42-1.42a5 5 0 0 0-7.07-7.07L10 5'/%3E%3Cpath d='M14 11a5 5 0 0 0-7.07 0L5.5 12.5a5 5 0 0 0 7.07 7.07L14 19'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231d4ed8' stroke-width='2'%3E%3Cpath d='M10 13a5 5 0 0 0 7.07 0l1.42-1.42a5 5 0 0 0-7.07-7.07L10 5'/%3E%3Cpath d='M14 11a5 5 0 0 0-7.07 0L5.5 12.5a5 5 0 0 0 7.07 7.07L14 19'/%3E%3C/svg%3E");
 }
 
 /* STEP 3 – Get Views */
 #how .grid .card:nth-child(3)::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'%3E%3Cpath d='M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231d4ed8' stroke-width='2'%3E%3Cpath d='M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
 }
 
 
@@ -1816,6 +1766,7 @@ popupOverlay.onclick = e => {
   
 </body>
 </html>
+
 
 
 
