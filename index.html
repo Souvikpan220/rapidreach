@@ -550,6 +550,118 @@ main, header, section, .container {
   z-index: 2;
 }
 
+/* ===================================================
+   TEXT VISIBILITY FIX – LIGHT UI (SAFE OVERRIDE)
+   =================================================== */
+
+/* Global text */
+body {
+  color: #0b1220 !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, strong {
+  color: #0b1220 !important;
+}
+
+/* Paragraphs & normal text */
+p, span, li, div {
+  color: #334155;
+}
+
+/* Subtitle typing text */
+.subtitle {
+  color: #475569 !important;
+}
+
+/* Header */
+header {
+  background: rgba(255,255,255,0.85) !important;
+  border-bottom: 1px solid #e5e7eb;
+}
+header strong,
+nav a {
+  color: #0b1220 !important;
+}
+
+/* Cards */
+.card {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  color: #0b1220 !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+/* FAQ */
+.faq-item div {
+  color: #0b1220 !important;
+}
+.faq-a {
+  color: #475569 !important;
+}
+
+/* Stats strip text stays readable */
+.stat-item {
+  color: #0b1220 !important;
+}
+
+/* Modals */
+.box {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+}
+.box h3 {
+  color: #0b1220 !important;
+}
+.box p,
+.box li {
+  color: #475569 !important;
+}
+
+/* Inputs */
+input {
+  background: #f1f5f9 !important;
+  color: #0b1220 !important;
+  border: 1px solid #cbd5f5 !important;
+}
+
+/* Buttons – BLUE + BLACK THEME */
+.btn {
+  background: #0b1220 !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+.btn:hover {
+  box-shadow: 0 12px 40px rgba(37,99,235,0.35);
+}
+
+/* Primary buttons */
+.primary {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  color: #ffffff !important;
+}
+
+/* Arrow button */
+.arrow-btn {
+  background: #2563eb !important;
+  border: none !important;
+}
+.arrow-btn svg {
+  stroke: #ffffff !important;
+}
+
+/* Service modal buttons */
+button {
+  color: #0b1220;
+}
+
+/* Footer already white – just ensure text */
+footer,
+footer a {
+  color: #0b1220 !important;
+}
+
+  
   
 </style>
 
@@ -1134,6 +1246,7 @@ popupOverlay.onclick = e => {
   
 </body>
 </html>
+
 
 
 
