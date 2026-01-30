@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <meta charset="UTF-8">
@@ -1108,6 +1108,41 @@ section:not(#how):not(#services) .grid .card:nth-child(3)::before {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231d4ed8' stroke-width='2'%3E%3Cpath d='M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
 }
 
+/* =========================================
+   POPUP (TOS / CONTACT) TEXT COLOR FIX
+   ========================================= */
+
+/* Main popup content text */
+.popup-content {
+  color: #334155; /* slate gray */
+}
+
+/* Headings inside popup */
+.popup-content h1,
+.popup-content h2,
+.popup-content h3 {
+  color: #0b1220;
+  margin-top: 18px;
+}
+
+/* Paragraphs */
+.popup-content p {
+  color: #475569;
+  line-height: 1.7;
+}
+
+/* Strong / bold text */
+.popup-content strong {
+  color: #0b1220;
+  font-weight: 700;
+}
+
+/* Links (if added later) */
+.popup-content a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
 
 </style>
 </style>
@@ -1766,6 +1801,7 @@ popupOverlay.onclick = e => {
   
 </body>
 </html>
+
 
 
 
