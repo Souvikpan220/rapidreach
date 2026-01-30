@@ -993,6 +993,83 @@ section:not(#how):not(#services) .grid .card:nth-child(3)::before {
   color: #94a3b8;
 }
 
+/* =========================================
+   HOW IT WORKS – PURPOSE ICONS (FIX)
+   ========================================= */
+
+/* Base icon container already exists, we fill it */
+#how .grid .card::before {
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 26px !important;
+}
+
+/* STEP 1 – Choose Service (Grid icon) */
+#how .grid .card:nth-child(1)::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'%3E%3Crect x='3' y='3' width='7' height='7'/%3E%3Crect x='14' y='3' width='7' height='7'/%3E%3Crect x='3' y='14' width='7' height='7'/%3E%3Crect x='14' y='14' width='7' height='7'/%3E%3C/svg%3E");
+}
+
+/* STEP 2 – Paste Link (Link icon) */
+#how .grid .card:nth-child(2)::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'%3E%3Cpath d='M10 13a5 5 0 0 0 7.07 0l1.42-1.42a5 5 0 0 0-7.07-7.07L10 5'/%3E%3Cpath d='M14 11a5 5 0 0 0-7.07 0L5.5 12.5a5 5 0 0 0 7.07 7.07L14 19'/%3E%3C/svg%3E");
+}
+
+/* STEP 3 – Get Views (Eye icon) */
+#how .grid .card:nth-child(3)::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'%3E%3Cpath d='M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+}
+
+/* =========================================
+   SERVICE MODAL BUTTONS – VISIBILITY FIX
+   ========================================= */
+
+/* Active service button */
+.modal .primary {
+  background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+/* Disabled buttons */
+.modal .disabled {
+  background: #e5e7eb !important;
+  color: #94a3b8 !important;
+  border: none !important;
+  cursor: not-allowed;
+}
+
+/* Cancel button */
+.modal button:not(.primary):not(.disabled) {
+  background: #0b1220 !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+  
+/* =========================================
+   MAIN SERVICE BUTTONS – VISIBILITY FIX
+   ========================================= */
+
+.btn {
+  background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 12px 30px rgba(37,99,235,0.35);
+}
+
+/* Button text */
+.btn svg,
+.btn span,
+.btn {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+
+/* Hover */
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 45px rgba(37,99,235,0.45);
+}
   
 </style>
 </style>
@@ -1647,6 +1724,7 @@ popupOverlay.onclick = e => {
   
 </body>
 </html>
+
 
 
 
