@@ -845,6 +845,44 @@ section:not(#how) .grid .card {
   color: #64748b;
 }
 
+/* =========================================
+   WHY CHOOSE US – MATCH OUR SERVICES STYLE
+   ========================================= */
+
+section:not(#how):not(#services) .grid {
+  gap: 32px;
+}
+
+/* Why Choose Us cards */
+section:not(#how):not(#services) .grid .card {
+  background: #ffffff !important;
+  border: none !important;
+  border-radius: 20px !important;
+  padding: 36px 28px !important;
+  color: #0b1220 !important;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.06) !important;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  text-align: center;
+}
+
+/* Hover effect */
+section:not(#how):not(#services) .grid .card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px rgba(37,99,235,0.18) !important;
+}
+
+/* Text inside cards */
+section:not(#how):not(#services) .grid .card {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Emoji/icons spacing */
+section:not(#how):not(#services) .grid .card::first-letter {
+  font-size: 1.4rem;
+  margin-right: 6px;
+}
+
   
 </style>
 </style>
@@ -1499,6 +1537,7 @@ popupOverlay.onclick = e => {
   
 </body>
 </html>
+
 
 
 
