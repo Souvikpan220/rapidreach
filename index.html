@@ -1143,6 +1143,81 @@ section:not(#how):not(#services) .grid .card:nth-child(3)::before {
   text-decoration: underline;
 }
 
+/* =========================================
+   EXPLORE OUR SHOP – STYLES
+   ========================================= */
+
+.shop-section {
+  padding: 120px 20px;
+  text-align: center;
+}
+
+.shop-sub {
+  color: #475569;
+  margin-bottom: 50px;
+}
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto 30px;
+}
+
+.shop-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.shop-card img {
+  width: 32px;
+}
+
+.shop-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 60px rgba(37,99,235,0.25);
+}
+
+/* Big glowing cards */
+.shop-premium {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  max-width: 900px;
+  margin: 70px auto 0;
+}
+
+.premium-card {
+  padding: 50px;
+  border-radius: 24px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  cursor: pointer;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #fff;
+  box-shadow: 0 25px 70px rgba(37,99,235,0.45);
+  transition: 0.35s;
+}
+
+.premium-card.gold {
+  background: linear-gradient(135deg, #f5c77a, #d39b1a);
+  color: #000;
+  box-shadow: 0 25px 70px rgba(245,199,122,0.55);
+}
+
+.premium-card:hover {
+  transform: scale(1.04);
+}
+
 
 </style>
 </style>
@@ -1337,6 +1412,65 @@ section:not(#how):not(#services) .grid .card:nth-child(3)::before {
     <div class="card">Step 3 - Get Views (Id Must be Public) </div>
   </div>
 </section>
+
+<!-- ===============================
+     EXPLORE OUR SHOP (ADDED)
+     =============================== -->
+<section id="shop" class="shop-section">
+  <h2>Explore Our Shop</h2>
+  <p class="shop-sub">Premium & advanced growth services</p>
+
+  <!-- Instagram row -->
+  <div class="shop-grid">
+    <div class="shop-card insta" onclick="openShop('Instagram Followers')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+      <span>Instagram Followers</span>
+    </div>
+    <div class="shop-card insta" onclick="openShop('Instagram Likes')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+      <span>Instagram Likes</span>
+    </div>
+    <div class="shop-card insta" onclick="openShop('Instagram Views')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+      <span>Instagram Views</span>
+    </div>
+    <div class="shop-card insta" onclick="openShop('Instagram Comments')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+      <span>Instagram Comments</span>
+    </div>
+  </div>
+
+  <!-- TikTok row -->
+  <div class="shop-grid">
+    <div class="shop-card tiktok" onclick="openShop('TikTok Followers')">
+      <img src="https://i.pinimg.com/736x/33/4a/31/334a31894db94d6adcbaa5fbf8491abf.jpg">
+      <span>TikTok Followers</span>
+    </div>
+    <div class="shop-card tiktok" onclick="openShop('TikTok Likes')">
+      <img src="https://i.pinimg.com/736x/33/4a/31/334a31894db94d6adcbaa5fbf8491abf.jpg">
+      <span>TikTok Likes</span>
+    </div>
+    <div class="shop-card tiktok" onclick="openShop('TikTok Views')">
+      <img src="https://i.pinimg.com/736x/33/4a/31/334a31894db94d6adcbaa5fbf8491abf.jpg">
+      <span>TikTok Views</span>
+    </div>
+    <div class="shop-card tiktok" onclick="openShop('TikTok Comments')">
+      <img src="https://i.pinimg.com/736x/33/4a/31/334a31894db94d6adcbaa5fbf8491abf.jpg">
+      <span>TikTok Comments</span>
+    </div>
+  </div>
+
+  <!-- Big premium cards -->
+  <div class="shop-premium">
+    <div class="premium-card" onclick="openShop('Creator Bundle')">
+      🚀 Creator Growth Bundle
+    </div>
+    <div class="premium-card gold" onclick="openShop('Agency Plan')">
+      💎 Agency / Reseller Plan
+    </div>
+  </div>
+</section>
+
 
 <section id="faq">
   <h2>Frequently Asked Questions</h2>
@@ -1797,10 +1931,42 @@ popupOverlay.onclick = e => {
   });
 </script>
 
+<!-- SHOP MODAL (ADDED) -->
+<div class="modal" id="shopModal">
+  <div class="box">
+    <h3 id="shopTitle"></h3>
+
+    <p style="margin-top:10px;color:#475569">
+      High quality delivery • Safe • Instant start
+    </p>
+
+    <button class="primary" onclick="buyPremium()">
+      Proceed to Payment
+    </button>
+
+    <button onclick="closeShop()">
+      Cancel
+    </button>
+  </div>
+</div>
+  
+<script>
+function openShop(name){
+  document.getElementById("shopTitle").innerText = name;
+  document.getElementById("shopModal").classList.add("active");
+}
+
+function closeShop(){
+  document.getElementById("shopModal").classList.remove("active");
+}
+</script>
+
+
 
   
 </body>
 </html>
+
 
 
 
