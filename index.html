@@ -2029,8 +2029,34 @@ const prices = {
 
 function openShop(name){
   selectedService = name;
-  document.getElementById("qtyTitle").innerText = name;
-  document.getElementById("qtyModal").classList.add("active");
+
+  const qtyBox = document.getElementById("qtyModal");
+  const title = document.getElementById("qtyTitle");
+
+  title.innerText = name;
+
+  const options = prices[name];
+
+  let html = "";
+
+  Object.keys(options).forEach(q=>{
+    let label = q >= 100000
+      ? (q/1000)+"K"
+      : (q/1000)+"K";
+
+    html += `
+      <button onclick="selectQty(${q})">
+        ${label}
+      </button>
+    `;
+  });
+
+  html += `<button onclick="closeQty()">Cancel</button>`;
+
+  qtyBox.querySelector(".box").innerHTML =
+    `<h3 id="qtyTitle">${name}</h3>` + html;
+
+  qtyBox.classList.add("active");
 }
 
 function selectQty(qty){
@@ -2112,6 +2138,7 @@ async function proceedPayment(){
   
 </body>
 </html>
+
 
 
 
