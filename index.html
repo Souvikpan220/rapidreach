@@ -1977,6 +1977,10 @@ function closeShop(){
     <h3 id="linkServiceTitle"></h3>
 
     <input id="shopLinkInput" placeholder="Paste link">
+    <select id="currencySelect">
+  <option value="usd">Crypto / USD</option>
+  <option value="inr">INR</option>
+</select>
 
     <button class="primary" onclick="proceedPayment()">
       Proceed to Payment
@@ -2036,37 +2040,38 @@ function closeShopLink(){
 /* PAYMENT */
 async function proceedPayment(){
   const link = document.getElementById("shopLinkInput").value.trim();
-  if(!link){
-    alert("Paste valid link");
-    return;
-  }
+if(!link){ alert("Paste valid link"); return; }
 
-  const price = prices[selectedService][selectedQty];
+const currency =
+  document.getElementById("currencySelect").value;
 
-  const r = await fetch("/api/create-payment", {
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify({
-      service:selectedService,
-      qty:selectedQty,
-      price:price,
-      link:link
-    })
-  });
+const price = prices[selectedService][selectedQty];
 
-  const d = await r.json();
+const r = await fetch("/api/create-payment",{
+  method:"POST",
+  headers:{ "Content-Type":"application/json" },
+  body: JSON.stringify({
+    service:selectedService,
+    qty:selectedQty,
+    price:price,
+    link:link,
+    currency:currency
+  })
+});
 
-  if(d.invoice_url){
-    window.location.href = d.invoice_url;
-  } else {
-    alert("Payment error");
-  }
+const d = await r.json();
+
+if(d.invoice_url){
+  window.location.href = d.invoice_url;
+}else{
+  alert("Payment error");
 }
 </script>
 
   
 </body>
 </html>
+
 
 
 
