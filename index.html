@@ -1471,9 +1471,9 @@ section:not(#how):not(#services) .grid .card:nth-child(3)::before {
       <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
       <span>Instagram Views</span>
     </div>
-    <div class="shop-card insta" onclick="openShop('Instagram Comments')">
+    <div class="shop-card insta" onclick="openShop('Instagram Shares')">
       <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
-      <span>Instagram Comments</span>
+      <span>Instagram Shares</span>
     </div>
   </div>
 
@@ -1491,9 +1491,9 @@ section:not(#how):not(#services) .grid .card:nth-child(3)::before {
       <img src="https://i.pinimg.com/736x/33/4a/31/334a31894db94d6adcbaa5fbf8491abf.jpg">
       <span>TikTok Views</span>
     </div>
-    <div class="shop-card tiktok" onclick="openShop('TikTok Comments')">
+    <div class="shop-card tiktok" onclick="openShop('TikTok Shares')">
       <img src="https://i.pinimg.com/736x/33/4a/31/334a31894db94d6adcbaa5fbf8491abf.jpg">
-      <span>TikTok Comments</span>
+      <span>TikTok Shares</span>
     </div>
   </div>
 
@@ -1980,9 +1980,9 @@ popupOverlay.onclick = e => {
   <div class="box">
     <h3 id="qtyTitle"></h3>
 
-    <button onclick="selectQty(1000)">1K</button>
-    <button onclick="selectQty(2000)">2K</button>
-    <button onclick="selectQty(3000)">3K</button>
+    <button onclick="selectQty(1000)">50k</button>
+    <button onclick="selectQty(2000)">100k</button>
+    <button onclick="selectQty(3000)">500k</button>
 
     <button onclick="closeQty()">Cancel</button>
   </div>
@@ -2019,12 +2019,12 @@ const prices = {
   "Instagram Followers": {1000:5, 2000:9, 3000:13},
   "Instagram Likes": {1000:5, 2000:3.5, 3000:5},
   "Instagram Views": {1000:1.4, 2000:3.5, 3000:3.5},
-  "Instagram Comments": {1000:6, 2000:11, 3000:15},
+  "Instagram Shares": {1000:6, 2000:11, 3000:15},
 
   "TikTok Followers": {1000:4, 2000:7, 3000:10},
   "TikTok Likes": {1000:2, 2000:3.5, 3000:5},
   "TikTok Views": {1000:1.2, 2000:2, 3000:3},
-  "TikTok Comments": {1000:5, 2000:9, 3000:12}
+  "TikTok Shares": {1000:5, 2000:9, 3000:12}
 };
 
 function openShop(name){
@@ -2112,6 +2112,7 @@ async function proceedPayment(){
   
 </body>
 </html>
+
 
 
 
