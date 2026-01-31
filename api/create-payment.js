@@ -1,46 +1,29 @@
-export default async function handler(req,res){
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).end();
+  }
 
-  const { service, qty, price, link, currency } = req.body;
-
-  /* CREATE NOWPAYMENTS INVOICE */
-  const response = await fetch(
-    "https://api.nowpayments.io/v1/invoice",
-    {
-      method:"POST",
-      headers:{
-        "x-api-key":process.env.NOWPAYMENTS_KEY,
-        "Content-Type":"application/json"
-      },
-      body: JSON.stringify({
-        price_amount: price,
-        price_currency: currency || "usd",
-        order_id: Date.now(),
-        order_description: `${service} ${qty}`,
-        success_url:"https://yourdomain.com/success"
-      })
-    }
-  );
-
-  const data = await response.json();
-
-  /* SEND TO DISCORD */
-  await fetch("YOUR_DISCORD_WEBHOOK",{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
+  const response = await fetch("https://api.nowpayments.io/v1/invoice", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": process.env.NOWPAYMENTS_API_KEY
+    },
     body: JSON.stringify({
-      embeds:[{
-        title:"🛒 New Order",
-        color:5814783,
-        fields:[
-          {name:"Service",value:service},
-          {name:"Quantity",value:qty.toString()},
-          {name:"Price",value:`${price} ${currency}`},
-          {name:"Link",value:link}
-        ],
-        timestamp:new Date()
-      }]
+      price_amount: 4.99,
+      price_currency: "usd",
+      order_id: "premium_" + Date.now(),
+      order_description: "RapidReach Premium Lifetime",
+      success_url: "https://rapidreach.fun/premium-success.html",
+      cancel_url: "https://rapidreach.fun"
     })
   });
 
-  res.json({ invoice_url:data.invoice_url });
+  const data = await response.json();
+
+  if(!data.invoice_url){
+    return res.status(400).json(data);
+  }
+
+  res.json({ invoice_url: data.invoice_url });
 }
