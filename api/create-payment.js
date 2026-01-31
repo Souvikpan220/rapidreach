@@ -10,7 +10,7 @@ export default async function handler(req, res) {
       "x-api-key": process.env.NOWPAYMENTS_API_KEY
     },
     body: JSON.stringify({
-      price_amount: 4.99,
+      price_amount: req.body.price,
       price_currency: "usd",
       order_id: "premium_" + Date.now(),
       order_description: "RapidReach Premium Lifetime",
