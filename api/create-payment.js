@@ -6,10 +6,13 @@ export default async function handler(req,res){
 
   try{
 
-    const {
-      price = 9.99,
-      service = "Premium Plan"
-    } = req.body || {};
+const {
+  price = 9.99,
+  service = "Premium Plan",
+  qty = "",
+  link = ""
+} = req.body || {};
+
 
     const r = await fetch("https://api.nowpayments.io/v1/invoice",{
       method:"POST",
@@ -20,7 +23,7 @@ export default async function handler(req,res){
       body: JSON.stringify({
         price_amount: Number(price),
         price_currency: "usd",
-        order_description: service,
+        order_description: `${service} | ${qty} | ${link}`,
 
         // 🔥 DO NOT SET pay_currency
         // This lets user choose any crypto
