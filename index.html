@@ -2013,17 +2013,58 @@ let selectedQty = 0;
 
 const prices = {
 
-  /* INSTAGRAM */
-  "Instagram Followers": {1000:5, 2000:9, 3000:13},
-  "Instagram Likes": {10000:5, 20000:9, 30000:13},
-  "Instagram Views": {10000:1.4, 20000:2.5, 30000:3.5},
-  "Instagram Shares": {1000:6, 2000:11, 3000:15},
+  /* ================= INSTAGRAM ================= */
 
-  /* TIKTOK */
-  "TikTok Followers": {1000:4, 2000:7, 3000:10},
-  "TikTok Likes": {10000:2, 20000:3.5, 30000:5},
-  "TikTok Views": {10000:1.2, 20000:2, 30000:3},
-  "TikTok Shares": {1000:5, 2000:9, 3000:12}
+  "Instagram Followers": {
+    1000: 1,
+    5000: 5,
+    10000: 10
+  },
+
+  "Instagram Views": {
+    50000: 5,
+    100000: 10,
+    500000: 50
+  },
+
+  "Instagram Likes": {
+    50000: 10,
+    100000: 20,
+    500000: 100
+  },
+
+  "Instagram Shares": {
+    5000: 1.5,
+    25000: 7.5,
+    50000: 15
+  },
+
+  /* ================= TIKTOK ================= */
+
+  "TikTok Views": {
+    50000: 0.75,
+    100000: 1.5,
+    500000: 7.5
+  },
+
+  "TikTok Followers": {
+    1000: 1.5,
+    5000: 7.5,
+    10000: 15
+  },
+
+  "TikTok Likes": {
+    50000: 2,
+    100000: 4,
+    500000: 20
+  },
+
+  "TikTok Shares": {
+    25000: 2,
+    50000: 4,
+    100000: 8
+  }
+
 };
 
 /* OPEN SHOP */
@@ -2039,12 +2080,20 @@ function openShop(name){
   let buttons = "";
 
   Object.keys(options).forEach(q=>{
-    buttons += `
-      <button onclick="selectQty(${q})">
-        ${q/1000}K
-      </button>
-    `;
-  });
+
+  const price = options[q];
+
+  let label =
+    q >= 1000
+      ? (q/1000) + "K"
+      : q;
+
+  buttons += `
+    <button onclick="selectQty(${q})">
+      ${label} — $${price}
+    </button>
+  `;
+});
 
   box.innerHTML = `
     <h3>${name}</h3>
@@ -2135,6 +2184,7 @@ async function proceedPayment(){
   
 </body>
 </html>
+
 
 
 
