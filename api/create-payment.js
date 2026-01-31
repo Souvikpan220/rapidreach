@@ -1,29 +1,38 @@
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).end();
+export default async function handler(req,res){
+
+  if(req.method !== "POST"){
+    return res.status(405).json({error:"Method not allowed"});
   }
 
-  const response = await fetch("https://api.nowpayments.io/v1/invoice", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": process.env.NOWPAYMENTS_API_KEY
-    },
-    body: JSON.stringify({
-      price_amount: req.body.price,
-      price_currency: "usd",
-      order_id: "premium_" + Date.now(),
-      order_description: "RapidReach Premium Lifetime",
-      success_url: "https://rapidreach.fun/premium-success.html",
-      cancel_url: "https://rapidreach.fun"
-    })
-  });
+  try{
 
-  const data = await response.json();
+    const { price = 9.99, service = "Premium Plan" } = req.body || {};
 
-  if(!data.invoice_url){
-    return res.status(400).json(data);
+    const r = await fetch("https://api.nowpayments.io/v1/invoice",{
+      method:"POST",
+      headers:{
+        "x-api-key": process.env.NOWPAYMENTS_KEY,
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({
+        price_amount: Number(price),
+        price_currency: "usd",
+        pay_currency: "btc",
+        order_description: service
+      })
+    });
+
+    const data = await r.json();
+
+    if(!data.invoice_url){
+      console.log("NOWPAYMENTS ERROR:", data);
+      return res.status(500).json({error:"NowPayments failed"});
+    }
+
+    return res.json({invoice_url:data.invoice_url});
+
+  }catch(err){
+    console.log(err);
+    return res.status(500).json({error:"Server error"});
   }
-
-  res.json({ invoice_url: data.invoice_url });
 }
