@@ -1547,6 +1547,48 @@ section:not(#how):not(#services) .grid .card:nth-child(3)::before {
 
 </section>
 
+<!-- ===============================
+     SUPPORT TICKET SECTION (ADDED)
+     =============================== -->
+<section id="support-ticket">
+  <h2>🎫 Support Ticket</h2>
+  <p style="margin-bottom:30px;">
+    Facing any issue? Submit a ticket and our team will assist you.
+  </p>
+
+  <form id="ticketForm" style="max-width:520px;margin:auto;text-align:left;">
+    <input id="ticketName" placeholder="Your Name" required>
+    <input id="ticketEmail" type="email" placeholder="Your Email" required>
+
+    <select id="ticketIssue" required>
+      <option value="">Select Issue</option>
+      <option value="Payment Issue">Payment Issue</option>
+      <option value="Order Not Delivered">Order Not Delivered</option>
+      <option value="Premium Access">Premium Access</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <textarea
+      id="ticketDesc"
+      placeholder="Describe your issue"
+      rows="4"
+      required
+    ></textarea>
+
+    <button id="ticketSubmitBtn" class="primary" type="submit">
+      Submit Ticket
+    </button>
+
+    <p
+      id="ticketSuccessMsg"
+      style="display:none;margin-top:12px;color:#16a34a;font-weight:700;"
+    >
+      ✅ Ticket sent successfully. We’ll contact you soon.
+    </p>
+  </form>
+</section>
+
+
 <footer>
   <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap">
     <a href="#" id="tosLink">Terms of Service</a>
@@ -2181,94 +2223,9 @@ async function proceedPayment(){
 }
   
 </script>
-
-<script>
-  const ticketForm = document.getElementById("ticketForm");
-  const successMsg = document.getElementById("ticketSuccessMsg");
-  const submitBtn = document.getElementById("ticketSubmitBtn");
-
-  ticketForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    submitBtn.disabled = true;
-    submitBtn.innerText = "Sending...";
-
-    const payload = {
-      name: document.getElementById("ticketName").value,
-      email: document.getElementById("ticketEmail").value,
-      issue: document.getElementById("ticketIssue").value,
-      description: document.getElementById("ticketDesc").value
-    };
-
-    try {
-      const res = await fetch("/api/submit-ticket", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-
-      if (res.ok) {
-        ticketForm.reset();
-        successMsg.style.display = "block";
-      }
-    } catch (err) {
-      alert("Failed to send ticket. Please try again.");
-    }
-
-    submitBtn.disabled = false;
-    submitBtn.innerText = "Submit Ticket";
-  });
-</script>
   
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
