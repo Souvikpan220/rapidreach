@@ -1255,6 +1255,99 @@ section:not(#how):not(#services) .grid .card:nth-child(3)::before {
   box-shadow:0 12px 30px rgba(37,99,235,.35);
 }
 
+/* =========================================
+   SUPPORT TICKET – MODERN UI (ADD-ONLY)
+   ========================================= */
+
+#support-ticket {
+  padding: 120px 20px;
+  background: transparent;
+}
+
+#support-ticket h2 {
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+}
+
+#support-ticket p {
+  color: #475569;
+}
+
+/* Form wrapper */
+#support-ticket form {
+  background: #ffffff;
+  padding: 36px 32px;
+  border-radius: 22px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.06);
+}
+
+/* Inputs, select, textarea */
+#support-ticket input,
+#support-ticket select,
+#support-ticket textarea {
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #cbd5f5;
+  background: #f8fafc;
+  font-size: 15px;
+  font-weight: 500;
+  color: #0b1220;
+  transition: 0.25s ease;
+  outline: none;
+}
+
+/* Placeholder */
+#support-ticket input::placeholder,
+#support-ticket textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* Focus state */
+#support-ticket input:focus,
+#support-ticket select:focus,
+#support-ticket textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.18);
+  background: #ffffff;
+}
+
+/* Select arrow fix */
+#support-ticket select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #2563eb 50%),
+    linear-gradient(135deg, #2563eb 50%, transparent 50%);
+  background-position:
+    calc(100% - 22px) calc(50% - 3px),
+    calc(100% - 16px) calc(50% - 3px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+/* Textarea resize control */
+#support-ticket textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Submit button spacing */
+#ticketSubmitBtn {
+  margin-top: 22px;
+}
+
+/* Success message */
+#ticketSuccessMsg {
+  background: #ecfdf5;
+  border: 1px solid #86efac;
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin-top: 16px;
+  text-align: center;
+}
+
 
 </style>
 </style>
@@ -2265,6 +2358,7 @@ async function proceedPayment(){
   
 </body>
 </html>
+
 
 
 
