@@ -2181,9 +2181,48 @@ async function proceedPayment(){
 }
   
 </script>
+
+<script>
+  const ticketForm = document.getElementById("ticketForm");
+  const successMsg = document.getElementById("ticketSuccessMsg");
+  const submitBtn = document.getElementById("ticketSubmitBtn");
+
+  ticketForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Sending...";
+
+    const payload = {
+      name: document.getElementById("ticketName").value,
+      email: document.getElementById("ticketEmail").value,
+      issue: document.getElementById("ticketIssue").value,
+      description: document.getElementById("ticketDesc").value
+    };
+
+    try {
+      const res = await fetch("/api/submit-ticket", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        ticketForm.reset();
+        successMsg.style.display = "block";
+      }
+    } catch (err) {
+      alert("Failed to send ticket. Please try again.");
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.innerText = "Submit Ticket";
+  });
+</script>
   
 </body>
 </html>
+
 
 
 
