@@ -7,7 +7,7 @@ export default async function handler(req,res){
   try{
 
 const {
-  price = 5.99,
+  price = 2.99,
   service = "Premium Plan",
   qty = "",
   link = ""
