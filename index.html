@@ -1719,7 +1719,7 @@ section:not(#how):not(#services) .grid .card:nth-child(3)::before {
 <div class="modal" id="premiumModal">
   <div class="box">
     <h3>💎 Premium Plan</h3>
-    <p style="margin-top:8px;color:#aaa">$9.99 / 30 Days</p>
+    <p style="margin-top:8px;color:#aaa">$2.99 / 30 Days</p>
 
     <ul style="text-align:left;margin:20px 0;color:#5865F2;line-height:1.7">
       <li>⚡ Faster delivery</li>
@@ -1881,7 +1881,7 @@ async function buyPremium(){
   method:"POST",
   headers:{ "Content-Type":"application/json" },
   body: JSON.stringify({
-    price: 5.99,
+    price: 2.99,
     service: "Premium Plan"
   })
 });
@@ -2359,6 +2359,7 @@ async function proceedPayment(){
   
 </body>
 </html>
+
 
 
 
